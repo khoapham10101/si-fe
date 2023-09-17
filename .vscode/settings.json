@@ -1,0 +1,17 @@
+{
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"],
+    "eslint.format.enable": true,
+    "git.confirmSync": false,
+    "editor.lineHeight": 0,
+    "editor.fontSize": 12,
+    "editor.formatOnSave": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+  }
+
+  
