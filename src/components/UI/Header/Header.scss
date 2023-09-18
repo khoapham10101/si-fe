@@ -1,0 +1,16 @@
+.header {
+    ::v-deep .input-component {
+        input {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+    .btn-search {
+        border: none;
+        outline:none;
+        width: 100px;
+        background-color: #3b71ca;
+        border-radius: 0 4px 4px 0;
+        color: #fff;
+    }
+}
