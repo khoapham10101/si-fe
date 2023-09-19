@@ -1,5 +1,7 @@
 import { Product } from "@/types/product";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { PATH } from "@/constants/path";
+import { CartItem } from "@/store/modules/cart";
 
 @Component({
   name: "product-card-component",
@@ -9,4 +11,15 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class ProductCard extends Vue {
   @Prop({ default: null }) private data!: Product | null;
+
+  get pathDetail(): string {
+    return `${PATH.Product}/${this.data?.id}`;
+  }
+
+  private handleAddToCart() {
+    this.$store.dispatch("cart/addToCart", {
+      ...this.data,
+      total: 1,
+    } as CartItem);
+  }
 }

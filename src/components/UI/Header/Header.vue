@@ -13,12 +13,19 @@
           </div>
 
           <div class="col-lg-5 col-md-12 col-12 d-flex">
-            <Input placeholder="Search" className="w-100" />
-            <button class="btn-search" type="button">Search</button>
+            <Input
+              placeholder="Search"
+              className="w-100"
+              v-model="keyword"
+              @keyup.enter="handleSubmit()"
+            />
+            <button class="btn-search" type="button" @click="handleSubmit()">
+              Search
+            </button>
           </div>
 
           <div class="order-lg-last col-lg-5 col-12">
-            <div class="d-flex gap-2 flex-wrap justify-content-end">
+            <div class="d-flex gap-1 gap-sm-2 flex-wrap justify-content-end">
               <button type="button" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-user"></i>
                 <span> Sign in</span>
@@ -29,7 +36,12 @@
               </button>
               <button type="button" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span> My cart </span>
+                <span>
+                  My cart
+                  <span class="text-danger fw-bolder"
+                    >({{ cartTotal }})</span
+                  ></span
+                >
               </button>
             </div>
           </div>

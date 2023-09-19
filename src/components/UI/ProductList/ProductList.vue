@@ -2,7 +2,7 @@
   <div class="product-list row">
     <div
       class="col-lg-3 col-md-6 col-sm-6"
-      v-for="product in productList"
+      v-for="product in data"
       :key="product.id"
     >
       <ProductCard :data="product" />

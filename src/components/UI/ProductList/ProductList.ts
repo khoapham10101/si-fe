@@ -1,6 +1,6 @@
-import { Component, Vue } from "vue-property-decorator";
-import { PRODUCTS_DUMMY } from "@/dummies/product";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import ProductCard from "../ProductCard/ProductCard.vue";
+import { Product } from "@/types/product";
 
 @Component({
   name: "product-list-component",
@@ -9,5 +9,5 @@ import ProductCard from "../ProductCard/ProductCard.vue";
   },
 })
 export default class ProductList extends Vue {
-  private productList = PRODUCTS_DUMMY;
+  @Prop({ default: [] }) private data!: Product[];
 }
