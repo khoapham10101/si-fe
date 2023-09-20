@@ -1,0 +1,10 @@
+@import "@/styles/_variables";
+
+.add-to-cart-btn {
+    background-color: $primary-color !important;
+    transition: all linear 0.2s !important;
+    &:hover {
+        opacity: 0.9 !important;
+    }
+    
+}

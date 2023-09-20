@@ -14,11 +14,19 @@ const routes: Array<RouteConfig> = [
       layout: DEFAULT_LAYOUT,
     },
   },
+  {
+    path: "/product/:id",
+    name: "product-detail-page",
+    component: () => import("@/views/ProductDetail/index.vue"),
+    meta: {
+      layout: DEFAULT_LAYOUT,
+    },
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: process.env.VUE_APP_BASE_URL,
   routes,
 });
 

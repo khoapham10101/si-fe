@@ -18,7 +18,7 @@
 
     <div class="container py-5">
       <h3>New products</h3>
-      <ProductList />
+      <ProductList :data="productList" />
     </div>
   </div>
 </template>

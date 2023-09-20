@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const axiosRequest: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_DOMAIN || "",
+  baseURL: process.env.VUE_APP_API_URL,
   headers: {
     //
   },

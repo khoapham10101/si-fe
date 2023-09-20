@@ -22,4 +22,5 @@ export default class Input extends Vue {
   @Prop({ default: "" }) private invalidFeedback?: string;
   @Prop({ default: "" }) private validFeedback?: string;
   @Prop({ default: "" }) private autoComplete?: string;
+  @Prop({ default: "" }) private value?: string;
 }

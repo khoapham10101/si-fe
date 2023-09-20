@@ -32,10 +32,8 @@ export default class App extends Vue {
     window.scrollTo({
       top: 0,
     });
-    console.log(val.meta.layout);
 
     if (val.meta.layout !== undefined) {
-      console.log(val.meta.layout);
       this.layout = val.meta.layout;
     } else {
       this.layout = DEFAULT_LAYOUT;

@@ -17,8 +17,12 @@
         :placeholder="placeholder"
         :required="required"
         :autocomplete="autoComplete"
+        :value="value"
         @input="$emit('input', $event.target.value)"
         @blur="$emit('blur', $event)"
+        @keyup="$emit('keyup', $event)"
+        @keydown="$emit('keydown', $event)"
+        @keypress="$emit('keypress', $event)"
       />
       <span class="input-group-text" v-if="suffix">{{ suffix }}</span>
 
