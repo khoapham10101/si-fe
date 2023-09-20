@@ -8,7 +8,7 @@
         :class="[
           'form-control',
           // { 'is-valid': isValid && required },
-          { 'is-invalid': !isValid && required },
+          // { 'is-invalid': !isValid && required },
           inputClass,
         ]"
         :aria-label="ariaLabel"

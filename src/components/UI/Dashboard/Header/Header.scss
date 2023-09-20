@@ -1,0 +1,9 @@
+.header {
+  min-width: 300px;
+  & .btn-collapse-sidebar {
+    border: none;
+    outline: none;
+    font-size: 20px;
+    background: unset;
+  }
+}

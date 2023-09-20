@@ -8,7 +8,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class Input extends Vue {
   @Prop({ default: "" }) private id?: string;
-  @Prop({ default: "text" }) private type?: "text" | "password";
+  @Prop({ default: "text" }) private type?:
+    | "text"
+    | "password"
+    | "email"
+    | "number";
   @Prop({ default: "default" }) private size?: "sm" | "default" | "lg";
   @Prop({ default: "" }) private prefix?: string;
   @Prop({ default: "" }) private suffix?: string;
