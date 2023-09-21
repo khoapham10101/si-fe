@@ -1,7 +1,12 @@
 import axios, { AxiosInstance } from "axios";
+import store from "@/store";
+import router from "@/router";
+import { PATH } from "@/constants/path";
+
+const BASE_URL = process.env.VUE_APP_API_URL + "/api/v1";
 
 const axiosRequest: AxiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
+  baseURL: BASE_URL,
   headers: {
     //
   },
@@ -10,7 +15,9 @@ const axiosRequest: AxiosInstance = axios.create({
 
 axiosRequest.interceptors.request.use(
   (config) => {
-    const accessToken = "";
+    const accessToken =
+      localStorage.getItem("token") ||
+      store.getters["auth/authState"].access_token;
     if (config.headers) {
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
@@ -28,6 +35,11 @@ axiosRequest.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response.status === 401) {
+      store.dispatch("auth/resetAuth");
+      localStorage.clear();
+      router.replace({ path: PATH.Home });
+    }
     return Promise.reject(error);
   }
 );

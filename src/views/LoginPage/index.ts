@@ -1,5 +1,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import Input from "@/components/Base/Input/Input.vue";
+import { LoginPayload } from "@/services/auth/type";
+import { AuthService } from "@/services/auth";
+import { AuthState } from "@/store/modules/auth";
+import { PATH } from "@/constants/path";
+import store from "@/store";
 
 @Component({
   name: "login-page",
@@ -21,6 +26,8 @@ export default class LoginPage extends Vue {
     },
     valid: false,
   };
+  private isLoading = false;
+  private errorMessage = "";
 
   private validEmail(value: string) {
     const regex = /(.+)@(.+){2,}\.(.+){2,}/;
@@ -42,15 +49,35 @@ export default class LoginPage extends Vue {
     }
   }
 
-  private submit() {
+  private async submit() {
     this.validate();
     if (this.form.valid) {
-      // console.log(this.form);
-      const formData = {
-        email: this.form.email.value,
-        password: this.form.password.value,
-      };
-      console.log(formData);
+      this.isLoading = true;
+      this.errorMessage = "";
+      try {
+        const payload: LoginPayload = {
+          email: this.form.email.value,
+          password: this.form.password.value,
+        };
+
+        const { data } = await AuthService.login(payload);
+
+        if (data.code === 200) {
+          const { access_token, user } = data.data;
+          this.$store.dispatch("auth/updateAuth", {
+            access_token,
+            profile: user,
+            isAuthenticated: true,
+          } as AuthState);
+          localStorage.setItem("token", access_token);
+          localStorage.setItem("profile", JSON.stringify(user));
+          this.$router.replace({ path: PATH.Home });
+        }
+      } catch (error: any) {
+        this.errorMessage = error.response.data.message;
+      } finally {
+        this.isLoading = false;
+      }
     }
   }
 }

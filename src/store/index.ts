@@ -1,13 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { counter } from "./modules/counter";
 import { cart } from "./modules/cart";
+import { auth } from "./modules/auth";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    counter,
     cart,
+    auth,
   },
 });

@@ -1,8 +1,11 @@
+import { PATH } from "@/constants/path";
+import store from "@/store";
+
 export const auth = ({ next, router }: any) => {
-  const isAuthenticated = false;
+  const isAuthenticated = localStorage.getItem("token");
 
   if (!isAuthenticated) {
-    return next({ name: "login" });
+    return next({ path: PATH.Login });
   }
 
   return next();
