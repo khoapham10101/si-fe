@@ -24,7 +24,7 @@ const { swiper, swiperSlide } = VueAwesomeSwiper;
 export default class ProductDetailPage extends Vue {
   private quantity = 1;
   private product = {} as Product;
-  private isLoading = false;
+  private isLoading = true;
 
   private activeIndex = 0;
   private activeImage = "";
@@ -56,12 +56,8 @@ export default class ProductDetailPage extends Vue {
 
   private mounted() {
     this.getProductDetail();
-    console.log(this.swiper);
+    // console.log(this.swiper);
   }
-
-  private siperOptions = {
-    //
-  };
 
   private async getProductDetail() {
     try {

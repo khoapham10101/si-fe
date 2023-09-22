@@ -34,6 +34,7 @@
                 <img
                   :src="handleImagePath(activeImage)"
                   class="w-100 h-100"
+                  style="object-fit: contain"
                   alt=""
                 />
               </div>
@@ -41,7 +42,12 @@
           </div>
 
           <!-- swiper -->
-          <swiper class="swiper mt-3" :options="swiperOption" ref="mySwiper">
+          <swiper
+            class="swiper mt-3"
+            :options="swiperOption"
+            ref="mySwiper"
+            v-if="!isLoading"
+          >
             <swiper-slide v-for="(item, index) in product?.images" :key="index">
               <div
                 :class="['h-100', { active: activeImage === item.path }]"
