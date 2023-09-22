@@ -10,8 +10,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class Sidebar extends Vue {
   @Prop({ default: false }) isCollapse?: boolean;
 
-  private menuItems = MENU_SIDEBAR.filter((item) => !item.children);
-  private menuItemsHasSub = MENU_SIDEBAR.filter((item) => item.children);
+  private menuItems = MENU_SIDEBAR;
 
   private windowWidth = window.innerWidth;
 

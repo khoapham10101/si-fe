@@ -13,6 +13,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 
+import VueAwesomeSwiper from "vue-awesome-swiper";
+import "swiper/dist/css/swiper.css";
+
+Vue.use(VueAwesomeSwiper);
 Vue.use(Element, { locale });
 Vue.config.productionTip = false;
 

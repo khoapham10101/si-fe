@@ -1,13 +1,14 @@
 .product-card {
-    max-width: 600px;
-    &-image {
-        object-fit: cover;
-    }
-    & .add-to-cart-btn, .add-wishlist {
-        height: 36px;
-        font-size: 12px;
-    }
-    & .add-wishlist {
-        width: 36px;
-    }
+  max-width: 600px;
+  &-image {
+    object-fit: cover;
+  }
+  & .add-to-cart-btn,
+  .add-wishlist {
+    height: 36px;
+    font-size: 12px;
+  }
+  & .add-wishlist {
+    width: 36px;
+  }
 }

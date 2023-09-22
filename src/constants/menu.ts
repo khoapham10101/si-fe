@@ -18,16 +18,16 @@ export const MENU_SIDEBAR: MenuItem[] = [
     icon: "fa-solid fa-users",
     label: "User",
   },
-  //   {
-  //     index: "/more",
-  //     icon: "fa-solid fa-sliders",
-  //     label: "More",
-  //     children: [
-  //       {
-  //         index: "/account/sub1",
-  //         icon: "fa-solid fa-gears",
-  //         label: "Navigator One",
-  //       },
-  //     ],
-  //   },
+  // {
+  //   index: "/more",
+  //   icon: "fa-solid fa-sliders",
+  //   label: "More",
+  //   children: [
+  //     {
+  //       index: "/account/sub1",
+  //       icon: "fa-solid fa-gears",
+  //       label: "Navigator One",
+  //     },
+  //   ],
+  // },
 ];

@@ -3,19 +3,76 @@ import Input from "@/components/Base/Input/Input.vue";
 import { PRODUCTS_DUMMY } from "@/dummies/product";
 import { Product } from "@/types/product";
 import { CartItem } from "@/store/modules/cart";
+import { ProductService } from "@/services/product";
+import { handleImagePath } from "@/helpers/handleImagePath";
+import "swiper/dist/css/swiper.css";
+
+import VueAwesomeSwiper from "vue-awesome-swiper";
+const { swiper, swiperSlide } = VueAwesomeSwiper;
 
 @Component({
   name: "product-detail-page",
   components: {
     Input,
+    swiper,
+    swiperSlide,
   },
+  // directives: {
+  //   swiper: directive,
+  // },
 })
 export default class ProductDetailPage extends Vue {
   private quantity = 1;
+  private product = {} as Product;
+  private isLoading = false;
 
-  get product(): Product | undefined {
-    const id = this.$route.params.id;
-    return PRODUCTS_DUMMY.find((item) => item.id === +id);
+  private activeIndex = 0;
+  private activeImage = "";
+
+  private swiperOption = {
+    slidesPerView: "auto",
+    spaceBetween: 10,
+    centeredSlides: true,
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  };
+
+  private handleImagePath = handleImagePath;
+
+  get id() {
+    return this.$route.params.id;
+  }
+
+  get swiper() {
+    return (this.$refs.mySwiper as any).swiper;
+  }
+
+  private mounted() {
+    this.getProductDetail();
+    console.log(this.swiper);
+  }
+
+  private siperOptions = {
+    //
+  };
+
+  private async getProductDetail() {
+    try {
+      this.isLoading = true;
+      this.product = await ProductService.getPublicProductDetail(this.id);
+      this.activeImage = this.product.images[0].path;
+    } catch (error) {
+      //
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   private increaseQuantity() {
@@ -35,4 +92,8 @@ export default class ProductDetailPage extends Vue {
       total: this.quantity,
     } as CartItem);
   }
+
+  private onSwiper = (swiper: any) => {
+    console.log(swiper);
+  };
 }
