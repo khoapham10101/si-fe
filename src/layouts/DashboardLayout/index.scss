@@ -1,0 +1,21 @@
+.dashboard-layout {
+  .sidebar {
+    background-color: #293042;
+    &.mobile {
+      position: fixed;
+      width: 300px;
+      left: -300px;
+      transition: all linear 0.25s;
+      &.open {
+        left: 0;
+      }
+    }
+    & .btn-close-sidebar {
+      border: none;
+      outline: none;
+      font-size: 26px;
+      background-color: unset;
+      margin-right: 10px;
+    }
+  }
+}

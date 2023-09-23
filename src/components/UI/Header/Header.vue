@@ -26,10 +26,14 @@
 
           <div class="order-lg-last col-lg-5 col-12">
             <div class="d-flex gap-1 gap-sm-2 flex-wrap justify-content-end">
-              <button type="button" class="btn btn-outline-secondary">
+              <router-link
+                :to="PATH.Login"
+                type="button"
+                class="btn btn-outline-secondary"
+              >
                 <i class="fa-solid fa-user"></i>
                 <span> Sign in</span>
-              </button>
+              </router-link>
               <button type="button" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-heart"></i>
                 <span> Wishlist </span>

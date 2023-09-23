@@ -1,0 +1,11 @@
+@import "@/styles/_variables";
+
+.register-page {
+    background-color: $primary-color;
+    min-height: 100vh;
+    & .form-wrapper {
+        border-radius: 20px;
+        background-color: #fff;
+        max-width: 400px;
+    }
+}

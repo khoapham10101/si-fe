@@ -5,6 +5,7 @@ const axiosRequest: AxiosInstance = axios.create({
   headers: {
     //
   },
+  timeout: 20000,
 });
 
 axiosRequest.interceptors.request.use(

@@ -1,7 +1,12 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import HomePage from "../views/HomePage/index.vue";
-import { DEFAULT_LAYOUT } from "@/constants/common";
+import {
+  BLANK_LAYOUT,
+  DASHBOARD_LAYOUT,
+  DEFAULT_LAYOUT,
+} from "@/constants/common";
+import { PATH } from "@/constants/path";
 
 Vue.use(VueRouter);
 
@@ -10,9 +15,6 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "home-page",
     component: HomePage,
-    meta: {
-      layout: DEFAULT_LAYOUT,
-    },
   },
   {
     path: "/product/:id",
@@ -22,11 +24,43 @@ const routes: Array<RouteConfig> = [
       layout: DEFAULT_LAYOUT,
     },
   },
+  {
+    path: PATH.Login,
+    name: "login-page",
+    component: () => import("@/views/LoginPage/index.vue"),
+    meta: {
+      layout: BLANK_LAYOUT,
+    },
+  },
+  {
+    path: PATH.Register,
+    name: "register-page",
+    component: () => import("@/views/RegisterPage/index.vue"),
+    meta: {
+      layout: BLANK_LAYOUT,
+    },
+  },
+  {
+    path: "/account/products",
+    name: "admin-product-page",
+    component: () => import("@/views/Dashboard/Products/index.vue"),
+    meta: {
+      layout: DASHBOARD_LAYOUT,
+    },
+  },
+  {
+    path: "/account/users",
+    name: "admin-users-page",
+    component: () => import("@/views/Dashboard/Users/index.vue"),
+    meta: {
+      layout: DASHBOARD_LAYOUT,
+    },
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.VUE_APP_BASE_URL,
+  base: "",
   routes,
 });
 

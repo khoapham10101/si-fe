@@ -10,6 +10,7 @@ import { PATH } from "@/constants/path";
 })
 export default class Header extends Vue {
   private keyword = "";
+  private PATH = PATH;
 
   get cartTotal(): number {
     return this.$store.getters["cart/carts"].total;
@@ -24,7 +25,7 @@ export default class Header extends Vue {
   private handleSubmit() {
     if (this.keyword) {
       this.$router
-        .push({ path: PATH.Home, query: { keyword: this.keyword } })
+        .replace({ path: PATH.Home, query: { keyword: this.keyword } })
         .catch((error) => {
           //
         });
