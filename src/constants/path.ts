@@ -8,5 +8,6 @@ export const PATH = {
   Account: {
     Product: `${accountPath}/products`,
     User: `${accountPath}/users`,
+    Wishlist: `${accountPath}/wishlist`,
   },
 };

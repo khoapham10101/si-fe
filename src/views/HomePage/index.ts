@@ -6,6 +6,7 @@ import { PRODUCTS_DUMMY } from "@/dummies/product";
 import { ProductService } from "@/services/product";
 import { Product } from "@/types/product";
 import { PATH } from "@/constants/path";
+import { WishlistService } from "@/services/wishlist";
 
 @Component({
   name: "home-page",
@@ -21,6 +22,7 @@ export default class HomePage extends Vue {
   private totalPage = 1;
   private currentPage = Number(this.$route.query.page) || 1;
   private isProductLoading = false;
+  private isCreateWishlistLoading = false;
 
   @Watch("$route", { deep: true })
   private routeChange(value: any) {
@@ -77,5 +79,23 @@ export default class HomePage extends Vue {
       return;
     }
     this.handleChangePage(this.currentPage - 1);
+  }
+
+  private async handleCreateWishList(id: number) {
+    try {
+      this.isCreateWishlistLoading = true;
+      await WishlistService.createWishlist(id);
+      this.$message({
+        message: "Create wishlist successfully",
+        type: "success",
+      });
+    } catch (error: any) {
+      this.$message({
+        message: error.response.data.message,
+        type: "error",
+      });
+    } finally {
+      this.isCreateWishlistLoading = false;
+    }
   }
 }
