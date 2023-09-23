@@ -23,16 +23,8 @@
         </div>
       </div>
       <div class="d-flex align-items-center gap-1">
-        <p>Admin</p>
-        <div class="rounded-pill bg-info" style="width: 30px; height: 30px">
-          <img
-            class="w-100 h-100 rounded-circle"
-            :src="`https://i.pravatar.cc/200/${Math.floor(
-              Math.random() * 100
-            )}`"
-            alt=""
-          />
-        </div>
+        <p>{{ profile?.email }}</p>
+        <DropdownUser />
       </div>
     </div>
   </header>

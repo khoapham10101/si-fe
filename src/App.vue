@@ -1,5 +1,9 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="{ loading: isLogoutLoading }"
+    v-loading="isLogoutLoading"
+  >
     <component :is="layout">
       <router-view :layout.sync="layout" />
     </component>
@@ -19,7 +23,26 @@ import { DEFAULT_LAYOUT } from "./constants/common";
 export default class App extends Vue {
   private layout: string | null = null;
 
+  get isLogoutLoading() {
+    return this.$store.getters["auth/isLogoutLoading"];
+  }
+
   private created() {
+    const access_token = localStorage.getItem("token");
+    const profile = localStorage.getItem("profile")
+      ? JSON.parse(localStorage.getItem("profile") as string)
+      : null;
+    if (access_token && profile) {
+      this.$store.dispatch("auth/updateAuth", {
+        access_token,
+        profile,
+        isAuthenticated: true,
+      });
+    } else {
+      this.$store.dispatch("auth/resetAuth");
+    }
+
+    //
     if (this.$route.meta?.layout !== undefined) {
       this.layout = this.$route.meta.layout;
     } else {
@@ -44,4 +67,9 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import "@/styles/_main";
+
+.loading {
+  height: 100vh;
+  overflow: hidden;
+}
 </style>

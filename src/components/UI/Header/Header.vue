@@ -30,6 +30,7 @@
                 :to="PATH.Login"
                 type="button"
                 class="btn btn-outline-secondary"
+                v-if="!isAuthenticated"
               >
                 <i class="fa-solid fa-user"></i>
                 <span> Sign in</span>
@@ -47,6 +48,7 @@
                   ></span
                 >
               </button>
+              <DropdownUser />
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-const accountPath = "/account";
+export const accountPath = "/account";
 
 export const PATH = {
   Home: "/",

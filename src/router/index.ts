@@ -7,6 +7,7 @@ import {
   DEFAULT_LAYOUT,
 } from "@/constants/common";
 import { PATH } from "@/constants/path";
+import { auth } from "@/middlewares/auth";
 
 Vue.use(VueRouter);
 
@@ -42,10 +43,11 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/account/products",
-    name: "admin-product-page",
+    name: "admin-products-page",
     component: () => import("@/views/Dashboard/Products/index.vue"),
     meta: {
       layout: DASHBOARD_LAYOUT,
+      middleware: [auth],
     },
   },
   {
@@ -54,6 +56,7 @@ const routes: Array<RouteConfig> = [
     component: () => import("@/views/Dashboard/Users/index.vue"),
     meta: {
       layout: DASHBOARD_LAYOUT,
+      middleware: [auth],
     },
   },
 ];
