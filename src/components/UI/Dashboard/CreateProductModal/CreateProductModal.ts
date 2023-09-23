@@ -47,6 +47,9 @@ export default class CreateProductModal extends Vue {
         message: "Please input price",
         trigger: "blur",
       },
+      {
+        min: 0,
+      },
     ],
     quantity: [
       {
@@ -58,7 +61,7 @@ export default class CreateProductModal extends Vue {
     brandId: [
       {
         required: true,
-        message: "Please select Brand",
+        message: "Please select brand",
         trigger: "change",
       },
     ],
@@ -68,6 +71,7 @@ export default class CreateProductModal extends Vue {
   private listFileUploaded = [] as ProductImage[];
   private listFileDelete: string[] = [];
   private isLoading = false;
+  private errorMsg = "";
 
   @Watch("visible")
   private visibleChange() {
@@ -152,6 +156,7 @@ export default class CreateProductModal extends Vue {
           //console.log({ ...this.form, images: this.listFileUpload });
           try {
             this.isLoading = true;
+            this.errorMsg = "";
             const payload: CreateProductPayload = {
               name: this.form.name,
               sku: this.form.sku,
@@ -184,8 +189,8 @@ export default class CreateProductModal extends Vue {
               );
               this.$emit("reload", data);
             }
-          } catch (error) {
-            //
+          } catch (error: any) {
+            this.errorMsg = error.response.data.message;
           } finally {
             this.isLoading = false;
           }
@@ -200,5 +205,6 @@ export default class CreateProductModal extends Vue {
     (this.$refs[formName] as any)?.resetFields();
     this.listFileUploaded = [];
     this.listFileUpload = [];
+    this.errorMsg = "";
   }
 }

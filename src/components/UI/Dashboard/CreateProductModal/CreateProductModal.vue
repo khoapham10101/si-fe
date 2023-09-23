@@ -2,7 +2,7 @@
   <div class="create-product-modal">
     <el-dialog
       :title="title"
-      :visible.sync="visible"
+      :visible="visible"
       @close="handleCloseModal()"
       :destroy-on-close="true"
     >
@@ -40,6 +40,8 @@
             v-model="form.price"
             type="number"
             placeholder="Price"
+            min="0"
+            onkeyup="if(this.value<0){this.value= this.value * -1}"
           ></el-input>
         </el-form-item>
 
@@ -48,6 +50,8 @@
             v-model="form.quantity"
             type="number"
             placeholder="Quantity"
+            min="0"
+            oninput="this.value = Math.abs(this.value)"
           ></el-input>
         </el-form-item>
 
@@ -141,6 +145,15 @@
           </el-upload>
         </el-form-item>
       </el-form>
+
+      <el-alert
+        v-if="!!errorMsg"
+        :title="errorMsg"
+        type="error"
+        show-icon
+        :closable="false"
+      >
+      </el-alert>
 
       <span slot="footer" class="dialog-footer">
         <el-button @click.native="handleCloseModal()">Cancel</el-button>
