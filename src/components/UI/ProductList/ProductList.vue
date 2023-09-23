@@ -2,10 +2,12 @@
   <div class="product-list row">
     <div
       class="col-lg-3 col-md-6 col-sm-6"
-      v-for="product in data"
-      :key="product.id"
+      v-for="(product, index) in listData"
+      :key="index"
     >
-      <ProductCard :data="product" />
+      <div class="my-3">
+        <ProductCard :data="product" />
+      </div>
     </div>
   </div>
 </template>

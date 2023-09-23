@@ -18,7 +18,44 @@
 
     <div class="container py-5">
       <h3>New products</h3>
-      <ProductList :data="productList" />
+      <ProductList :data="productList" :isLoading="isProductLoading" />
+      <el-empty
+        description="No data"
+        v-if="!productList.length && !isProductLoading"
+      ></el-empty>
+      <!-- pagination -->
+      <nav class="my-3" v-if="totalPage > 1 && !isProductLoading">
+        <ul
+          class="pagination w-full d-flex justify-content-center align-items-center"
+        >
+          <li
+            :class="['page-item page-link', { disabled: currentPage === 1 }]"
+            @click="handlePrev()"
+            style="cursor: pointer"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </li>
+          <li
+            :class="['page-item page-link', { active: currentPage === page }]"
+            v-for="page in totalPage"
+            :key="page"
+            style="cursor: pointer"
+            @click="handleChangePage(page)"
+          >
+            {{ page }}
+          </li>
+          <li
+            :class="[
+              'page-item page-link',
+              { disabled: currentPage === totalPage },
+            ]"
+            @click="handleNext()"
+            style="cursor: pointer"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </template>

@@ -23,20 +23,66 @@
     </nav>
     <!--  -->
 
-    <div class="container py-5">
+    <div style="min-height: 500px" v-loading="isLoading" v-if="isLoading"></div>
+    <div class="container py-5" v-else>
       <div class="row g-2 g-sm-5">
         <div class="col-12 col-md-5">
           <div class="card w-100">
             <div class="card-body">
               <div class="w-100 ratio ratio-1x1">
-                <img :src="product?.image" alt="" class="w-100 h-100" />
+                <!-- <img :src="product?.image" alt="" class="w-100 h-100" /> -->
+                <img
+                  :src="handleImagePath(activeImage)"
+                  class="w-100 h-100"
+                  style="object-fit: contain"
+                  alt=""
+                />
               </div>
             </div>
           </div>
+
+          <!-- swiper -->
+          <swiper
+            class="swiper mt-3"
+            :options="swiperOption"
+            ref="mySwiper"
+            v-if="!isLoading"
+          >
+            <swiper-slide v-for="(item, index) in product?.images" :key="index">
+              <div
+                :class="['h-100', { active: activeImage === item.path }]"
+                @click="activeImage = item.path"
+              >
+                <img
+                  :src="handleImagePath(item.path)"
+                  class="image-item w-100 h-100"
+                  alt=""
+                />
+              </div>
+            </swiper-slide>
+
+            <div class="swiper-pagination" slot="pagination"></div>
+            <div
+              class="swiper-button-prev"
+              slot="button-prev"
+              @click="$refs.mySwiper.swiper.slidePrev()"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div
+              class="swiper-button-next"
+              slot="button-next"
+              @click="$refs.mySwiper.swiper.slideNext()"
+            >
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="swiper-scrollbar" slot="scrollbar"></div>
+          </swiper>
+          <!--  -->
         </div>
 
         <div class="col-12 col-md-7">
-          <h3>{{ product?.title }}</h3>
+          <h3>{{ product?.name }}</h3>
           <div class="d-flex align-items-center gap-2 my-3">
             <div class="d-flex gap-1 text-warning mb-1">
               <i class="fa-solid fa-star"></i>
@@ -52,13 +98,10 @@
             </div>
           </div>
           <div class="text-secondary fs-3">
-            {{ product?.price.toFixed(2) }}$
+            {{ product?.price?.toFixed(2) }}$
           </div>
           <p class="text-secondary mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            eveniet magni, itaque voluptatum minus dicta sint commodi ipsum
-            nobis laboriosam laudantium? Libero eligendi fugiat accusamus,
-            nostrum eum aut fuga neque!
+            {{ product?.description }}
           </p>
           <!-- <div class="d-flex align-items-center mt-2">
             <div style="width: 120px">Type</div>

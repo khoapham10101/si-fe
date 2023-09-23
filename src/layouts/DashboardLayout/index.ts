@@ -1,4 +1,4 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import Header from "@/components/UI/Dashboard/Header/Header.vue";
 import Sidebar from "@/components/UI/Dashboard/Sidebar/Sidebar.vue";
 
@@ -38,5 +38,10 @@ export default class DashboardLayout extends Vue {
       this.collapseSidebar = false;
       this.openSidebar = !this.openSidebar;
     }
+  }
+
+  @Watch("$route")
+  private routeChange() {
+    this.openSidebar = false;
   }
 }

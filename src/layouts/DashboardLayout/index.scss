@@ -6,6 +6,7 @@
       width: 300px;
       left: -300px;
       transition: all linear 0.25s;
+      z-index: 99;
       &.open {
         left: 0;
       }

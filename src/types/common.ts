@@ -7,6 +7,11 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+interface LinkPaginate {
+  url: string | null;
+  label: string;
+  active: boolean;
+}
 export interface ApiPaginationResponse<T> {
   data: T;
   meta: {
@@ -16,5 +21,18 @@ export interface ApiPaginationResponse<T> {
     per_page: number;
     to: number;
     total: number;
+    links: LinkPaginate[];
+    path: string;
   };
+  links: {
+    first: string;
+    last: string;
+    prev: null;
+    next: null;
+  };
+}
+
+export interface PaginationPayload {
+  per_page: number;
+  current_page: number;
 }
