@@ -32,9 +32,9 @@
     .swiper-slide {
       width: 100px !important;
       height: 100px !important;
-      & .active {
-        border: 2px solid $primary-color;
-      }
+      // & .active {
+      //   border: 2px solid $primary-color;
+      // }
       & .image-item {
         object-fit: cover;
         cursor: pointer;

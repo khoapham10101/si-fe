@@ -123,8 +123,4 @@ export default class AdminProductsPage extends Vue {
     this.productEdit = row;
     this.visibleCreateProductModal = true;
   }
-
-  private handleEdit(index: number, row: any) {
-    // console.log(index, row);
-  }
 }

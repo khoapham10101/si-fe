@@ -49,10 +49,7 @@
             v-if="!isLoading"
           >
             <swiper-slide v-for="(item, index) in product?.images" :key="index">
-              <div
-                :class="['h-100', { active: activeImage === item.path }]"
-                @click="activeImage = item.path"
-              >
+              <div :class="['h-100']" @click="activeImage = item.path">
                 <img
                   :src="handleImagePath(item.path)"
                   class="image-item w-100 h-100"
