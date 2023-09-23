@@ -53,9 +53,6 @@
 
       <el-table-column fixed="right" width="100">
         <template slot-scope="scope">
-          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-            >Edit</el-button
-          > -->
           <el-button
             icon="el-icon-edit"
             size="mini"
@@ -79,6 +76,7 @@
         :page-size="maxPerPage"
         layout="sizes, prev, pager, next"
         :total="totalItems"
+        hide-on-single-page
         background
       >
       </el-pagination>

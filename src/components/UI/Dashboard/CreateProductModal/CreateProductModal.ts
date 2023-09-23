@@ -153,7 +153,6 @@ export default class CreateProductModal extends Vue {
     (this.$refs["create-product-form"] as any).validate(
       async (valid: boolean) => {
         if (valid) {
-          //console.log({ ...this.form, images: this.listFileUpload });
           try {
             this.isLoading = true;
             this.errorMsg = "";
@@ -171,7 +170,6 @@ export default class CreateProductModal extends Vue {
               await ProductService.createProduct(payload);
               this.$emit("reload");
             } else {
-              console.log(this.listFileDelete);
               if (this.listFileDelete.length > 0) {
                 //
               }
