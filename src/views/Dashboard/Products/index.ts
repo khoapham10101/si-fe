@@ -1,62 +1,130 @@
-import { Component, Vue } from "vue-property-decorator";
+import { ProductService } from "@/services/product";
+import { Brand, Product } from "@/types/product";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import CreateProductModal from "@/components/UI/Dashboard/CreateProductModal/CreateProductModal.vue";
 
 @Component({
   name: "admin-product-page",
   components: {
-    //
+    CreateProductModal,
   },
 })
 export default class AdminProductsPage extends Vue {
-  private inputSearch = "";
+  private keyword = "";
+  private listProducts = [] as Product[];
+  private listProductsOrigin = [] as Product[];
 
-  private tableData = [
-    {
-      date: "2016-05-03",
-      name: "Tom",
-      state: "California",
-      city: "Los Angeles",
-      address: "No. 189, Grove St, Los Angeles",
-      zip: "CA 90036",
-      tag: "Home",
-    },
-    {
-      date: "2016-05-02",
-      name: "Tom",
-      state: "California",
-      city: "Los Angeles",
-      address: "No. 189, Grove St, Los Angeles",
-      zip: "CA 90036",
-      tag: "Office",
-    },
-    {
-      date: "2016-05-04",
-      name: "Tom",
-      state: "California",
-      city: "Los Angeles",
-      address: "No. 189, Grove St, Los Angeles",
-      zip: "CA 90036",
-      tag: "Home",
-    },
-    {
-      date: "2016-05-01",
-      name: "Tom",
-      state: "California",
-      city: "Los Angeles",
-      address: "No. 189, Grove St, Los Angeles",
-      zip: "CA 90036",
-      tag: "Office",
-    },
-  ];
+  private currentPage = 1;
+  private maxPerPage = 10;
+  private totalPages = 1;
+  private totalItems = 0;
+
+  private isLoading = false;
+  private visibleCreateProductModal = false;
+  private productEdit: Product | null = null;
+
+  get brandsList(): Brand[] | null {
+    return this.$store.getters["product/brands"];
+  }
+
+  private mounted() {
+    this.getProducts();
+    if (!this.brandsList) {
+      this.getBrandList();
+    }
+  }
+
+  private async getProducts() {
+    try {
+      this.isLoading = true;
+      const { data, meta } = await ProductService.getListProducts({
+        current_page: this.currentPage,
+        per_page: this.maxPerPage,
+      });
+      this.listProducts = data;
+      this.listProductsOrigin = data;
+      this.totalPages = meta.last_page;
+      this.totalItems = meta.total;
+    } catch (error) {
+      //
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private async getBrandList() {
+    try {
+      const { data } = await ProductService.getListBrands();
+      this.$store.dispatch("product/updateBrands", data);
+    } catch (error) {
+      //
+    }
+  }
+
+  private handleSizeChange(val: number) {
+    this.maxPerPage = val;
+    if (this.currentPage !== 1) {
+      this.currentPage = 1;
+      return;
+    }
+    this.getProducts();
+  }
+  private handleCurrentChange(val: number) {
+    this.currentPage = val;
+    this.getProducts();
+  }
+
+  private handleReload(data?: Product) {
+    this.visibleCreateProductModal = false;
+    if (!data) {
+      this.currentPage = 1;
+      this.getProducts();
+    } else {
+      const indexEdited = this.listProducts.findIndex(
+        (item) => item.id === data.id
+      );
+      this.listProducts.splice(indexEdited, 1, data);
+      this.listProductsOrigin.splice(indexEdited, 1, data);
+    }
+  }
 
   private handleSearch() {
-    // console.log(this.inputSearch);
+    this.listProducts = this.listProductsOrigin.filter((item) =>
+      item.name.toLowerCase().includes(this.keyword.toLowerCase())
+    );
+  }
+
+  private openConfirmDelete(index: number, row: Product) {
+    this.$confirm("Do you want to delete this product?", "Confirm", {
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      type: "warning",
+    })
+      .then(() => {
+        this.handleDelete(row.id);
+      })
+      .catch(() => {
+        //
+      });
+  }
+
+  private async handleDelete(productId: number) {
+    // console.log("handleDelete", productId);
+    try {
+      this.isLoading = true;
+      await ProductService.deleteProduct(productId);
+      this.getProducts();
+    } catch (error) {
+      //
+    }
+  }
+
+  private openFormEdit(index: number, row: any) {
+    this.productEdit = row;
+    this.visibleCreateProductModal = true;
   }
 
   private handleEdit(index: number, row: any) {
-    // console.log(index, row);
-  }
-
-  private handleDelete(index: number, row: any) {
     // console.log(index, row);
   }
 }

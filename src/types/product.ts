@@ -1,11 +1,11 @@
-interface Brand {
+export interface Brand {
   id: 1;
   name: string;
   created_at: string;
   updated_at: string;
 }
 
-interface ProductImage {
+export interface ProductImage {
   path: string;
   url: string;
 }
