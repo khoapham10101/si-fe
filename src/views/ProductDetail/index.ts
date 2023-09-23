@@ -46,11 +46,11 @@ export default class ProductDetailPage extends Vue {
 
   private handleImagePath = handleImagePath;
 
-  get id() {
+  get id(): string {
     return this.$route.params.id;
   }
 
-  get swiper() {
+  get swiper(): any {
     return (this.$refs.mySwiper as any).swiper;
   }
 

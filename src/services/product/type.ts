@@ -1,4 +1,16 @@
 import { ApiPaginationResponse } from "@/types/common";
-import { Product } from "@/types/product";
+import { Brand, Product } from "@/types/product";
 
 export type GetProductsResponse = ApiPaginationResponse<Product[]>;
+export type GetBrandsResponse = ApiPaginationResponse<Brand[]>;
+
+export interface CreateProductPayload {
+  name: string;
+  sku: string;
+  description: string;
+  warranty_information: string;
+  quantity: number;
+  price: number;
+  brand_id: number;
+  images?: File[];
+}
