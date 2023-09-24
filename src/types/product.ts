@@ -5,6 +5,11 @@ export interface Brand {
   updated_at: string;
 }
 
+export interface BrandDropdown {
+  id: 1;
+  name: string;
+}
+
 export interface ProductImage {
   path: string;
   url: string;

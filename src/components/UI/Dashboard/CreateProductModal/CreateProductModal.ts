@@ -1,7 +1,7 @@
 import { SelectOption } from "@/components/Base/Select/Select";
 import { ProductService } from "@/services/product";
 import { CreateProductPayload } from "@/services/product/type";
-import { Brand, Product, ProductImage } from "@/types/product";
+import { Brand, BrandDropdown, Product, ProductImage } from "@/types/product";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { handleImagePath } from "@/helpers/handleImagePath";
 
@@ -101,8 +101,8 @@ export default class CreateProductModal extends Vue {
     // console.log(this.dataEdit);
   }
 
-  get brandsList(): Brand[] | null {
-    return this.$store.getters["product/brands"];
+  get brandsList(): BrandDropdown[] | null {
+    return this.$store.getters["product/brandsDropdown"];
   }
 
   get brandsOption(): SelectOption[] {

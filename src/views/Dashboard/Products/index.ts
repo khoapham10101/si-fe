@@ -2,6 +2,7 @@ import { ProductService } from "@/services/product";
 import { Brand, Product } from "@/types/product";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import CreateProductModal from "@/components/UI/Dashboard/CreateProductModal/CreateProductModal.vue";
+import { BrandService } from "@/services/brands";
 
 @Component({
   name: "admin-product-page",
@@ -30,7 +31,7 @@ export default class AdminProductsPage extends Vue {
   private mounted() {
     this.getProducts();
     if (!this.brandsList) {
-      this.getBrandList();
+      this.getBrandDropdown();
     }
   }
 
@@ -52,10 +53,14 @@ export default class AdminProductsPage extends Vue {
     }
   }
 
-  private async getBrandList() {
+  private async getBrandDropdown() {
     try {
-      const { data } = await ProductService.getListBrands();
-      this.$store.dispatch("product/updateBrands", data);
+      const { data } = await BrandService.getBrandsDropdown({
+        filters: {
+          name: "",
+        },
+      });
+      this.$store.dispatch("product/updateBrandsDropdown", data);
     } catch (error) {
       //
     }

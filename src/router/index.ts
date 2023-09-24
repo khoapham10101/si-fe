@@ -68,6 +68,15 @@ const routes: Array<RouteConfig> = [
       middleware: [auth],
     },
   },
+  {
+    path: PATH.Account.Brand,
+    name: "admin-brands-page",
+    component: () => import("@/views/Dashboard/Brands/index.vue"),
+    meta: {
+      layout: DASHBOARD_LAYOUT,
+      middleware: [auth],
+    },
+  },
 ];
 
 const router = new VueRouter({
