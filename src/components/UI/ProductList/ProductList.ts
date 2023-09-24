@@ -19,11 +19,7 @@ export default class ProductList extends Vue {
       : Array.from({ length: 4 }).map((_, index) => null);
   }
 
-  private deleteWishlist(id: number) {
-    this.$emit("deleteWishlist", id);
-  }
-
-  private createWishlist(id: number) {
-    this.$emit("createWishlist", id);
+  private reloadWishlist() {
+    this.$emit("reloadWishlist");
   }
 }

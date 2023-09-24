@@ -139,18 +139,36 @@
 
           <div class="d-flex mt-4 gap-2">
             <button
-              to="#"
               class="add-to-cart-btn btn btn-primary shadow-0 me-1 text-uppercase d-inline-flex justify-content-center align-items-center gap-2"
               @click="handleAddToCart()"
+              :disabled="isAddToCardLoading"
             >
-              <i class="fa-solid fa-cart-shopping"></i>
+              <span
+                class="spinner-border text-light"
+                role="status"
+                style="width: 20px; height: 20px"
+                v-show="isAddToCardLoading"
+              ></span>
+              <span v-show="!isAddToCardLoading">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </span>
+
               <span> Add to cart </span>
             </button>
             <button
               class="add-wishlist btn btn-light border icon-hover d-inline-flex justify-content-center align-items-center"
               @click="handleCreateWishList()"
+              :disabled="isWishlistLoading"
             >
-              <i class="fas fa-heart fa-lg text-secondary"></i>
+              <span
+                class="spinner-border text-secondary"
+                role="status"
+                style="width: 20px; height: 20px"
+                v-show="isWishlistLoading"
+              ></span>
+              <span v-show="!isWishlistLoading">
+                <i class="fas fa-heart fa-lg text-secondary"></i>
+              </span>
             </button>
           </div>
         </div>

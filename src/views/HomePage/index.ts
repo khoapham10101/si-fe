@@ -80,22 +80,4 @@ export default class HomePage extends Vue {
     }
     this.handleChangePage(this.currentPage - 1);
   }
-
-  private async handleCreateWishList(id: number) {
-    try {
-      this.isCreateWishlistLoading = true;
-      await WishlistService.createWishlist(id);
-      this.$message({
-        message: "Create wishlist successfully",
-        type: "success",
-      });
-    } catch (error: any) {
-      this.$message({
-        message: error.response.data.message,
-        type: "error",
-      });
-    } finally {
-      this.isCreateWishlistLoading = false;
-    }
-  }
 }
