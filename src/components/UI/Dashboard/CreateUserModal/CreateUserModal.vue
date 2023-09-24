@@ -25,11 +25,31 @@
         </el-form-item>
 
         <el-form-item label="Email" prop="email">
-          <el-input v-model="form.email" placeholder="Email"></el-input>
+          <el-input
+            v-model="form.email"
+            placeholder="Email"
+            :disabled="dataEdit"
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="Password" prop="password" v-if="!dataEdit">
-          <el-input v-model="form.password" placeholder="Password"></el-input>
+          <el-input
+            v-model="form.password"
+            placeholder="Password"
+            type="password"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="Confirm password"
+          prop="confirmPassword"
+          v-if="!dataEdit"
+        >
+          <el-input
+            v-model="form.confirmPassword"
+            placeholder="Password"
+            type="password"
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="ID Card" prop="idCard">

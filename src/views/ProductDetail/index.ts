@@ -1,13 +1,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import Input from "@/components/Base/Input/Input.vue";
 import { PRODUCTS_DUMMY } from "@/dummies/product";
-import { Product } from "@/types/product";
+import { Product, ProductImage } from "@/types/product";
 import { CartItem } from "@/store/modules/cart";
 import { ProductService } from "@/services/product";
 import { handleImagePath } from "@/helpers/handleImagePath";
 import "swiper/dist/css/swiper.css";
 
 import VueAwesomeSwiper from "vue-awesome-swiper";
+import { WishlistService } from "@/services/wishlist";
 const { swiper, swiperSlide } = VueAwesomeSwiper;
 
 @Component({
@@ -17,9 +18,6 @@ const { swiper, swiperSlide } = VueAwesomeSwiper;
     swiper,
     swiperSlide,
   },
-  // directives: {
-  //   swiper: directive,
-  // },
 })
 export default class ProductDetailPage extends Vue {
   private quantity = 1;
@@ -33,7 +31,7 @@ export default class ProductDetailPage extends Vue {
     slidesPerView: "auto",
     spaceBetween: 10,
     centeredSlides: true,
-    loop: true,
+    loop: false,
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
@@ -42,6 +40,7 @@ export default class ProductDetailPage extends Vue {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
+    initialSlide: 3,
   };
 
   private handleImagePath = handleImagePath;
@@ -92,4 +91,30 @@ export default class ProductDetailPage extends Vue {
   private onSwiper = (swiper: any) => {
     console.log(swiper);
   };
+
+  private swiperItemClick(path: string) {
+    this.activeImage = path;
+  }
+
+  private async handleCreateWishList() {
+    try {
+      this.isLoading = true;
+      await WishlistService.createWishlist(Number(this.id));
+      this.$message({
+        message: "Create wishlist successfully",
+        type: "success",
+      });
+    } catch (error: any) {
+      this.$message({
+        message: error.response.data.message,
+        type: "error",
+      });
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private handleClickTab(tab: any) {
+    // console.log(tab);
+  }
 }

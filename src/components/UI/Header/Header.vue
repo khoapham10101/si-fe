@@ -3,7 +3,7 @@
     <div class="p-3 text-center bg-white border-bottom">
       <div class="container">
         <div class="row gy-3">
-          <div class="col-lg-2 col-sm-4 col-4">
+          <div class="col-12 col-md-6">
             <router-link to="/" class="float-start">
               <img
                 src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
@@ -12,19 +12,7 @@
             </router-link>
           </div>
 
-          <div class="col-lg-5 col-md-12 col-12 d-flex">
-            <Input
-              placeholder="Search"
-              className="w-100"
-              v-model="keyword"
-              @keyup.enter="handleSubmit()"
-            />
-            <button class="btn-search" type="button" @click="handleSubmit()">
-              Search
-            </button>
-          </div>
-
-          <div class="order-lg-last col-lg-5 col-12">
+          <div class="order-lg-last col-12 col-md-6">
             <div class="d-flex gap-1 gap-sm-2 flex-wrap justify-content-end">
               <router-link
                 :to="PATH.Login"

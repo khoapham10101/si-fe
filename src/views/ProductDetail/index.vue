@@ -30,7 +30,6 @@
           <div class="card w-100">
             <div class="card-body">
               <div class="w-100 ratio ratio-1x1">
-                <!-- <img :src="product?.image" alt="" class="w-100 h-100" /> -->
                 <img
                   :src="handleImagePath(activeImage)"
                   class="w-100 h-100"
@@ -48,8 +47,12 @@
             ref="mySwiper"
             v-if="!isLoading"
           >
-            <swiper-slide v-for="(item, index) in product?.images" :key="index">
-              <div :class="['h-100']" @click="activeImage = item.path">
+            <swiper-slide
+              v-for="(item, index) in product?.images"
+              :key="index"
+              @click.native="swiperItemClick(item.path)"
+            >
+              <div :class="['h-100', { active: item.path === activeImage }]">
                 <img
                   :src="handleImagePath(item.path)"
                   class="image-item w-100 h-100"
@@ -80,42 +83,27 @@
 
         <div class="col-12 col-md-7">
           <h3>{{ product?.name }}</h3>
-          <div class="d-flex align-items-center gap-2 my-3">
-            <div class="d-flex gap-1 text-warning mb-1">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-regular fa-star-half-stroke"></i>
-            </div>
-            <span>4.5</span>
-            <div class="text-secondary d-flex align-items-center gap-1">
-              <i class="fa-regular fa-circle-dot"></i>
-              <span>154 orders</span>
-            </div>
-          </div>
-          <div class="text-secondary fs-3">
+
+          <div class="text-secondary fs-3 mt-3">
             {{ product?.price?.toFixed(2) }}$
-          </div>
-          <p class="text-secondary mt-2">
-            {{ product?.description }}
-          </p>
-          <!-- <div class="d-flex align-items-center mt-2">
-            <div style="width: 120px">Type</div>
-            <div class="text-secondary">Regular</div>
-          </div>
-          <div class="d-flex align-items-center mt-2">
-            <div style="width: 120px">Color</div>
-            <div class="text-secondary">Gray</div>
-          </div>
-          <div class="d-flex align-items-center mt-2">
-            <div style="width: 120px">Material</div>
-            <div class="text-secondary">Cotton</div>
           </div>
           <div class="d-flex align-items-center mt-2">
             <div style="width: 120px">Brand</div>
-            <div class="text-secondary">Nike</div>
-          </div> -->
+            <div class="text-secondary">{{ product.brand.name }}</div>
+          </div>
+
+          <div class="mt-3" style="height: 250px">
+            <el-tabs type="card" @tab-click="handleClickTab">
+              <el-tab-pane label="Description">
+                {{ product?.description }}
+              </el-tab-pane>
+              <el-tab-pane label="Delivery"> Delivery </el-tab-pane>
+              <el-tab-pane label="Warranty">
+                {{ product?.warranty_information }}
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+
           <div
             class="my-4 w-100"
             style="height: 1px; background-color: #ccc"
@@ -160,6 +148,7 @@
             </button>
             <button
               class="add-wishlist btn btn-light border icon-hover d-inline-flex justify-content-center align-items-center"
+              @click="handleCreateWishList()"
             >
               <i class="fas fa-heart fa-lg text-secondary"></i>
             </button>
