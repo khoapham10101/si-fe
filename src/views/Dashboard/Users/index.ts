@@ -3,6 +3,7 @@ import { User } from "@/types/user";
 import { Component, Vue } from "vue-property-decorator";
 import CreateUserModal from "@/components/UI/Dashboard/CreateUserModal/CreateUserModal.vue";
 import { UserStatus } from "@/types/auth";
+import { handleImagePath } from "@/helpers/handleImagePath";
 
 @Component({
   name: "admin-users-page",
@@ -23,6 +24,8 @@ export default class AdminUsersPage extends Vue {
   private isLoading = false;
   private visibleCreateUserModal = false;
   private userEdit: User | null = null;
+
+  private handleImagePath = handleImagePath;
 
   get listUserStatus(): UserStatus[] | null {
     return this.$store.getters["user/listUserStatus"];

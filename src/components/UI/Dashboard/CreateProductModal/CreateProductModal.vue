@@ -24,6 +24,7 @@
         <el-form-item label="Description" prop="description">
           <el-input
             v-model="form.description"
+            type="textarea"
             placeholder="Description"
           ></el-input>
         </el-form-item>
@@ -31,6 +32,7 @@
         <el-form-item label="Warranty information" prop="warrantyInformation">
           <el-input
             v-model="form.warrantyInformation"
+            type="textarea"
             placeholder="Warranty information"
           ></el-input>
         </el-form-item>

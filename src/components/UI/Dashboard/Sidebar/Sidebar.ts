@@ -1,6 +1,8 @@
 import { MENU_SIDEBAR } from "@/constants/menu";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+const MOBILE_SCREEN_WIDTH = 768;
+
 @Component({
   name: "sidebar-component",
   components: {
@@ -14,6 +16,10 @@ export default class Sidebar extends Vue {
 
   private windowWidth = window.innerWidth;
 
+  get defaultActive(): string {
+    return this.$route.path;
+  }
+
   private mounted() {
     window.addEventListener("resize", () => {
       this.windowWidth = window.innerWidth;
@@ -21,7 +27,7 @@ export default class Sidebar extends Vue {
   }
 
   get isMobile(): boolean {
-    return this.windowWidth <= 768;
+    return this.windowWidth <= MOBILE_SCREEN_WIDTH;
   }
 
   private beforeDestroy() {

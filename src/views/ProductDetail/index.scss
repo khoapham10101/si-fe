@@ -1,6 +1,7 @@
 @import "@/styles/_variables";
 
 .product-detail-page {
+  min-height: calc(100vh - 300px);
   & .btn-quantity {
     border: 1px solid #dee2e6;
     outline: none;
@@ -32,9 +33,9 @@
     .swiper-slide {
       width: 100px !important;
       height: 100px !important;
-      // & .active {
-      //   border: 2px solid $primary-color;
-      // }
+      & .active {
+        border: 2px solid $primary-color;
+      }
       & .image-item {
         object-fit: cover;
         cursor: pointer;
@@ -68,5 +69,14 @@
       height: 30px;
       box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
+  }
+
+  :deep(.el-tabs__item) {
+    color: #303133 !important;
+  }
+
+  :deep(.el-tabs__content) {
+    height: 200px;
+    overflow: auto;
   }
 }

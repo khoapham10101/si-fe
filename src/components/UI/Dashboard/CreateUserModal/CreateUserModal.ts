@@ -4,7 +4,7 @@ import { CreateProductPayload } from "@/services/product/type";
 import { Brand, Product, ProductImage } from "@/types/product";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { handleImagePath } from "@/helpers/handleImagePath";
-import { GENDER_OPTIONS } from "@/constants/common";
+import { DEFAULT_BIRTHDAY, GENDER_OPTIONS } from "@/constants/common";
 import { GenderEnum } from "@/enums/common";
 import { UserStatus } from "@/types/auth";
 import { CreateUserPayload, EditUserPayload } from "@/services/user/type";
@@ -24,12 +24,13 @@ export default class CreateUserModal extends Vue {
 
   private handleImagePath = handleImagePath;
   private title = "Create New User";
+
   private form = {
     email: "",
     firstName: "",
     lastName: "",
     idCard: "",
-    birthday: null as null | string,
+    birthday: DEFAULT_BIRTHDAY,
     gender: GenderEnum.MALE.toString(),
     id_1: "",
     id_2: "",
@@ -37,7 +38,21 @@ export default class CreateUserModal extends Vue {
     address: "",
     userStatusId: "",
     password: "",
+    confirmPassword: "",
   };
+
+  private validateConfirmPassword = (
+    rule?: any,
+    value?: string,
+    callback?: any
+  ) => {
+    if (value !== this.form.password) {
+      callback(new Error("Confirm password is invalid"));
+    } else {
+      callback();
+    }
+  };
+
   private rules = {
     email: [
       {
@@ -75,6 +90,17 @@ export default class CreateUserModal extends Vue {
       {
         min: 8,
         message: "Password min length is 8 characters",
+      },
+    ],
+    confirmPassword: [
+      {
+        required: true,
+        message: "Please input confirm password",
+        trigger: "blur",
+      },
+      {
+        validator: this.validateConfirmPassword,
+        trigger: "change",
       },
     ],
     idCard: [
@@ -118,7 +144,10 @@ export default class CreateUserModal extends Vue {
 
   private pickerOptions = {
     disabledDate(date: any) {
-      return date > Date.now();
+      const rangeYearDisable = 12;
+      const d = new Date();
+      const previous = d.setFullYear(d.getFullYear() - rangeYearDisable);
+      return date.getTime() > previous;
     },
   };
 
@@ -130,9 +159,7 @@ export default class CreateUserModal extends Vue {
   private visibleChange() {
     this.resetForm("create-user-form");
     if (this.dataEdit) {
-      console.log(this.dataEdit);
       this.title = "Edit User";
-      // console.log(this.dataEdit);
       (this.form.firstName = this.dataEdit.first_name),
         (this.form.lastName = this.dataEdit.last_name),
         (this.form.email = this.dataEdit.email),
@@ -154,7 +181,7 @@ export default class CreateUserModal extends Vue {
         (this.form.idCard = ""),
         (this.form.phone = ""),
         (this.form.userStatusId = ""),
-        (this.form.birthday = null),
+        (this.form.birthday = DEFAULT_BIRTHDAY),
         (this.form.gender = ""),
         (this.form.id_1 = ""),
         (this.form.id_2 = ""),
@@ -195,7 +222,7 @@ export default class CreateUserModal extends Vue {
             birthday: this.form.birthday
               ? moment(this.form.birthday).format("YYYY/MM/DD")
               : null,
-            gender: Number(this.form.gender),
+            gender_id: Number(this.form.gender),
             id_1: this.form.id_1,
             id_2: this.form.id_2,
             avatar: null,

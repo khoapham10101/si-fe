@@ -1,7 +1,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Input from "@/components/Base/Input/Input.vue";
 import Select from "@/components/Base/Select/Select.vue";
-import { GENDER_OPTIONS } from "@/constants/common";
+import { DEFAULT_BIRTHDAY, GENDER_OPTIONS } from "@/constants/common";
 import moment from "moment";
 import { GenderEnum } from "@/enums/common";
 import { RegisterPayload } from "@/services/auth/type";
@@ -55,14 +55,17 @@ export default class RegisterPage extends Vue {
       value: GenderEnum.FEMALE,
     },
     birthday: {
-      value: "",
+      value: DEFAULT_BIRTHDAY,
     },
     valid: false,
   };
 
   private pickerOptions = {
     disabledDate(date: any) {
-      return date > Date.now();
+      const rangeYearDisable = 12;
+      const d = new Date();
+      const previous = d.setFullYear(d.getFullYear() - rangeYearDisable);
+      return date.getTime() > previous;
     },
   };
 

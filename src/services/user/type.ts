@@ -15,7 +15,7 @@ export interface CreateUserPayload {
   last_name: string;
   id_card: string;
   birthday: string | null;
-  gender: number;
+  gender_id: number;
   id_1: string;
   id_2: string;
   avatar: string | null;

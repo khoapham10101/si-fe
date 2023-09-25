@@ -1,6 +1,7 @@
 <template>
   <div class="wish-list-page py-4">
     <div class="container">
+      <h2>Wishlist</h2>
       <ProductList
         :data="productList"
         :isLoading="isLoading"
