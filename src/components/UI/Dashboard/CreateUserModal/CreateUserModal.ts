@@ -1,7 +1,4 @@
 import { SelectOption } from "@/components/Base/Select/Select";
-import { ProductService } from "@/services/product";
-import { CreateProductPayload } from "@/services/product/type";
-import { Brand, Product, ProductImage } from "@/types/product";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { handleImagePath } from "@/helpers/handleImagePath";
 import { DEFAULT_BIRTHDAY, GENDER_OPTIONS } from "@/constants/common";
@@ -13,7 +10,7 @@ import moment from "moment";
 import { User } from "@/types/user";
 
 @Component({
-  name: "create-product-modal",
+  name: "create-user-modal",
   components: {
     //
   },

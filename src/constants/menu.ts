@@ -10,7 +10,7 @@ interface MenuItem {
 export const MENU_SIDEBAR: MenuItem[] = [
   {
     index: PATH.Account.Product,
-    icon: "fa-solid fa-list-check",
+    icon: "fa-brands fa-product-hunt",
     label: "Product",
   },
   {
@@ -22,6 +22,11 @@ export const MENU_SIDEBAR: MenuItem[] = [
     index: PATH.Account.Wishlist,
     icon: "fa-solid fa-heart",
     label: "Wishlist",
+  },
+  {
+    index: PATH.Account.Brand,
+    icon: "fa-solid fa-bars-progress",
+    label: "Brands",
   },
   // {
   //   index: "/more",

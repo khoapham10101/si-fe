@@ -1,10 +1,6 @@
 import { AxiosResponse } from "axios";
 import axiosRequest from "../api";
-import {
-  CreateProductPayload,
-  GetBrandsResponse,
-  GetProductsResponse,
-} from "./type";
+import { CreateProductPayload, GetProductsResponse } from "./type";
 import { Product } from "@/types/product";
 import { PaginationPayload } from "@/types/common";
 
@@ -98,16 +94,6 @@ export const ProductService = {
     const { data } = await axiosRequest.post(
       `/products/update/${id}`,
       formData
-    );
-    return data;
-  },
-
-  async getListBrands(
-    pagination?: PaginationPayload
-  ): Promise<GetBrandsResponse> {
-    const { data } = await axiosRequest.post<GetBrandsResponse>(
-      "/brands",
-      pagination && { pagination }
     );
     return data;
   },

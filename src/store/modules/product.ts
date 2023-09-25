@@ -1,30 +1,28 @@
-import { LoginResponse } from "@/services/auth/type";
-import { UserProfile } from "@/types/auth";
-import { Brand } from "@/types/product";
+import { Brand, BrandDropdown } from "@/types/product";
 import { Module } from "vuex";
 
 export interface ProductState {
-  brands: Brand[] | null;
+  brandsDropdown: BrandDropdown[] | null;
 }
 
 const store: Module<ProductState, any> = {
   namespaced: true,
   state: {
-    brands: null,
+    brandsDropdown: null,
   },
   mutations: {
-    UPDATE_BRANDS(state, value: Brand[] | null) {
-      state.brands = value;
+    UPDATE_BRANDS_DROPDOWN(state, value: BrandDropdown[] | null) {
+      state.brandsDropdown = value;
     },
   },
   getters: {
-    brands: (state) => {
-      return state.brands;
+    brandsDropdown: (state) => {
+      return state.brandsDropdown;
     },
   },
   actions: {
-    updateBrands({ commit }, payload: Brand[] | null) {
-      commit("UPDATE_BRANDS", payload);
+    updateBrandsDropdown({ commit }, payload: BrandDropdown[] | null) {
+      commit("UPDATE_BRANDS_DROPDOWN", payload);
     },
   },
 };

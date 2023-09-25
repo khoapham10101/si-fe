@@ -9,5 +9,6 @@ export const PATH = {
     Product: `${accountPath}/products`,
     User: `${accountPath}/users`,
     Wishlist: `${accountPath}/wishlist`,
+    Brand: `${accountPath}/brands`,
   },
 };

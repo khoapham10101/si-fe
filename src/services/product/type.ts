@@ -2,7 +2,6 @@ import { ApiPaginationResponse } from "@/types/common";
 import { Brand, Product } from "@/types/product";
 
 export type GetProductsResponse = ApiPaginationResponse<Product[]>;
-export type GetBrandsResponse = ApiPaginationResponse<Brand[]>;
 
 export interface CreateProductPayload {
   name: string;
