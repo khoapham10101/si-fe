@@ -4,7 +4,7 @@
     <template slot="template">
       <el-skeleton-item
         variant="image"
-        style="aspect-ratio: 1/1"
+        style="aspect-ratio: 1/1; border: none"
         class="product-card card"
       >
       </el-skeleton-item>
@@ -53,8 +53,14 @@
             </button>
             <button
               class="add-wishlist btn btn-light border icon-hover d-inline-flex justify-content-center align-items-center"
+              @click="handleWishlist()"
             >
-              <i class="fas fa-heart fa-lg text-secondary"></i>
+              <i
+                :class="[
+                  'fas fa-heart fa-lg text-secondary',
+                  { 'text-danger': isWishlist },
+                ]"
+              ></i>
             </button>
           </div>
         </div>

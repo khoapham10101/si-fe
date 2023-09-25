@@ -1,34 +1,18 @@
 <template>
-  <div class="home-page">
-    <div class="text-white py-5" style="background-color: #3b71ca">
-      <div class="container py-5">
-        <h1>
-          Best products &amp; <br />
-          brands in our store
-        </h1>
-        <p>Trendy Products, Factory Prices, Excellent Service</p>
-        <div class="d-flex g-2">
-          <button type="button" class="learn-more-btn">Learn more</button>
-          <button type="button" class="purchase-btn">
-            <span>Purchase now</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="container py-5" v-loading="isCreateWishlistLoading">
-      <h3>New products</h3>
+  <div class="wish-list-page py-4">
+    <div class="container">
       <ProductList
         :data="productList"
-        :isLoading="isProductLoading"
-        @createWishlist="handleCreateWishList"
+        :isLoading="isLoading"
+        :isWishlist="true"
+        @deleteWishlist="handleDeleteWishlist"
       />
       <el-empty
         description="No data"
-        v-if="!productList.length && !isProductLoading"
+        v-if="!productList.length && !isLoading"
       ></el-empty>
       <!-- pagination -->
-      <nav class="my-3" v-if="totalPage > 1 && !isProductLoading">
+      <nav class="my-3" v-if="totalPage > 1 && !isLoading">
         <ul
           class="pagination w-full d-flex justify-content-center align-items-center"
         >
@@ -44,7 +28,7 @@
             v-for="page in totalPage"
             :key="page"
             style="cursor: pointer"
-            @click="handleChangePage(page)"
+            @click="handlePageChange(page)"
           >
             {{ page }}
           </li>

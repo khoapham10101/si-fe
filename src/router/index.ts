@@ -13,12 +13,12 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
+    path: PATH.Home,
     name: "home-page",
     component: HomePage,
   },
   {
-    path: "/product/:id",
+    path: `${PATH.Product}/:id`,
     name: "product-detail-page",
     component: () => import("@/views/ProductDetail/index.vue"),
     meta: {
@@ -42,7 +42,7 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/account/products",
+    path: PATH.Account.Product,
     name: "admin-products-page",
     component: () => import("@/views/Dashboard/Products/index.vue"),
     meta: {
@@ -51,9 +51,18 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/account/users",
+    path: PATH.Account.User,
     name: "admin-users-page",
     component: () => import("@/views/Dashboard/Users/index.vue"),
+    meta: {
+      layout: DASHBOARD_LAYOUT,
+      middleware: [auth],
+    },
+  },
+  {
+    path: PATH.Account.Wishlist,
+    name: "admin-wishlist-page",
+    component: () => import("@/views/Dashboard/Wishlist/index.vue"),
     meta: {
       layout: DASHBOARD_LAYOUT,
       middleware: [auth],

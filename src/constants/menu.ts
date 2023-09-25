@@ -18,6 +18,11 @@ export const MENU_SIDEBAR: MenuItem[] = [
     icon: "fa-solid fa-users",
     label: "User",
   },
+  {
+    index: PATH.Account.Wishlist,
+    icon: "fa-solid fa-heart",
+    label: "Wishlist",
+  },
   // {
   //   index: "/more",
   //   icon: "fa-solid fa-sliders",

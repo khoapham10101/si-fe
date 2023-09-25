@@ -28,17 +28,19 @@
             <div class="d-flex gap-1 gap-sm-2 flex-wrap justify-content-end">
               <router-link
                 :to="PATH.Login"
-                type="button"
                 class="btn btn-outline-secondary"
                 v-if="!isAuthenticated"
               >
                 <i class="fa-solid fa-user"></i>
                 <span> Sign in</span>
               </router-link>
-              <button type="button" class="btn btn-outline-secondary">
+              <router-link
+                :to="PATH.Account.Wishlist"
+                class="btn btn-outline-secondary"
+              >
                 <i class="fa-solid fa-heart"></i>
                 <span> Wishlist </span>
-              </button>
+              </router-link>
               <button type="button" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>
