@@ -45,22 +45,42 @@
             class="card-footer d-flex justify-content-end align-items-end pt-3 px-0 pb-0 bg-white"
           >
             <button
-              to="#"
-              class="add-to-cart-btn btn btn-primary shadow-0 me-1 text-uppercase d-inline-flex justify-content-center align-items-center"
+              class="add-to-cart-btn btn btn-primary shadow-0 me-1 text-uppercase d-inline-flex justify-content-center align-items-center gap-2"
               @click="handleAddToCart()"
+              :disabled="isAddToCardLoading"
             >
-              Add to cart
+              <span
+                class="spinner-border text-light"
+                role="status"
+                style="width: 20px; height: 20px"
+                v-show="isAddToCardLoading"
+              ></span>
+              <span v-show="!isAddToCardLoading">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </span>
+
+              <span class="add-to-cart-text"> Add to cart </span>
             </button>
+
             <button
               class="add-wishlist btn btn-light border icon-hover d-inline-flex justify-content-center align-items-center"
               @click="handleWishlist()"
+              :disabled="isWishlistLoading"
             >
-              <i
-                :class="[
-                  'fas fa-heart fa-lg text-secondary',
-                  { 'text-danger': isWishlist },
-                ]"
-              ></i>
+              <span
+                class="spinner-border text-secondary"
+                role="status"
+                style="width: 14px; height: 14px"
+                v-show="isWishlistLoading"
+              ></span>
+              <span v-show="!isWishlistLoading">
+                <i
+                  :class="[
+                    'fas fa-heart fa-lg text-secondary',
+                    { 'text-danger': isWishlist },
+                  ]"
+                ></i>
+              </span>
             </button>
           </div>
         </div>

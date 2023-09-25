@@ -73,14 +73,4 @@ export default class WishListPage extends Vue {
     }
     this.handlePageChange(this.currentPage - 1);
   }
-
-  private async handleDeleteWishlist(id: number) {
-    try {
-      this.isLoading = true;
-      await WishlistService.deleteWishlist(id);
-      this.getWishlists();
-    } catch (error) {
-      //
-    }
-  }
 }

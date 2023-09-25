@@ -6,7 +6,7 @@
         :data="productList"
         :isLoading="isLoading"
         :isWishlist="true"
-        @deleteWishlist="handleDeleteWishlist"
+        @reloadWishlist="getWishlists()"
       />
       <el-empty
         description="No data"

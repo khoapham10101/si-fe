@@ -1,14 +1,24 @@
 .product-card {
   max-width: 600px;
+
   &-image {
     object-fit: cover;
   }
-  & .add-to-cart-btn,
-  .add-wishlist {
+  & .add-to-cart-btn {
+    overflow: auto;
     height: 36px;
     font-size: 12px;
   }
   & .add-wishlist {
-    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+  & .add-wishlist {
+    width: 40px;
+  }
+  & .add-to-cart-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

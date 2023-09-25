@@ -9,8 +9,7 @@
         <ProductCard
           :data="product"
           :isWishlist="isWishlist"
-          @deleteWishlist="deleteWishlist"
-          @createWishlist="createWishlist"
+          @reloadWishlist="reloadWishlist"
         />
       </div>
     </div>

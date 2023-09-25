@@ -33,10 +33,10 @@
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>
                   My cart
-                  <span class="text-danger fw-bolder"
+                  <span class="text-danger fw-bolder" v-if="!isLoading"
                     >({{ cartTotal }})</span
-                  ></span
-                >
+                  >
+                </span>
               </button>
               <DropdownUser />
             </div>
