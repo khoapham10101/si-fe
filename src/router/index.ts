@@ -6,7 +6,7 @@ import {
   DASHBOARD_LAYOUT,
   DEFAULT_LAYOUT,
 } from "@/constants/common";
-import { PATH } from "@/constants/path";
+import { PATH, accountPath } from "@/constants/path";
 import { auth } from "@/middlewares/auth";
 
 Vue.use(VueRouter);
@@ -75,6 +75,25 @@ const routes: Array<RouteConfig> = [
     meta: {
       layout: DASHBOARD_LAYOUT,
       middleware: [auth],
+    },
+  },
+
+  {
+    path: PATH.Account.Profile,
+    name: "profile-page",
+    component: () => import("@/views/Dashboard/ProfilePage/index.vue"),
+    meta: {
+      layout: DASHBOARD_LAYOUT,
+      middleware: [auth],
+    },
+  },
+
+  {
+    path: `${accountPath}/*`,
+    name: "not-found-page",
+    component: () => import("@/views/Dashboard/NotFoundPage/index.vue"),
+    meta: {
+      layout: DASHBOARD_LAYOUT,
     },
   },
 ];

@@ -5,6 +5,7 @@ import { AuthService } from "@/services/auth";
 import { AuthState } from "@/store/modules/auth";
 import { PATH } from "@/constants/path";
 import store from "@/store";
+import { UserService } from "@/services/user";
 
 @Component({
   name: "login-page",
@@ -64,13 +65,14 @@ export default class LoginPage extends Vue {
 
         if (data.code === 200) {
           const { access_token, user } = data.data;
+          localStorage.setItem("token", access_token);
+          const profile = await UserService.getUserDetail(user.id);
+          localStorage.setItem("profile", JSON.stringify(profile));
           this.$store.dispatch("auth/updateAuth", {
             access_token,
-            profile: user,
+            profile,
             isAuthenticated: true,
           } as AuthState);
-          localStorage.setItem("token", access_token);
-          localStorage.setItem("profile", JSON.stringify(user));
           this.$router.replace({ path: PATH.Home });
         }
       } catch (error: any) {

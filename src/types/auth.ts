@@ -34,23 +34,3 @@ export interface UserRegister {
   created_at_formatted: string;
   updated_at_formatted: string;
 }
-
-export interface UserProfile {
-  id: number;
-  first_name: string;
-  last_name: string;
-  id_card: string;
-  birthday: string;
-  gender_id: number;
-  id_1: number | null;
-  id_2: number;
-  avatar: string | null;
-  phone: string | null;
-  address: string | null;
-  user_status_id: number;
-  email: string;
-  email_verified_at: string | null;
-  created_at: string;
-  updated_at: string;
-  deleted_at: null;
-}

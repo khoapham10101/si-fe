@@ -100,10 +100,11 @@ export default class AdminProductsPage extends Vue {
   }
 
   private openConfirmDelete(index: number, row: Product) {
-    this.$confirm("Do you want to delete this product?", "Confirm", {
+    this.$confirm("Are you sure to delete this product?", "Confirm", {
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       type: "warning",
+      confirmButtonClass: "el-button--danger",
     })
       .then(() => {
         this.handleDelete(row.id);

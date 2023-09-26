@@ -7,6 +7,7 @@ export interface CreateProductPayload {
   name: string;
   sku: string;
   description: string;
+  delivery_infomation: string;
   warranty_information: string;
   quantity: number;
   price: number;

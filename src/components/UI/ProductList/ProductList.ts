@@ -11,7 +11,6 @@ import { Product } from "@/types/product";
 export default class ProductList extends Vue {
   @Prop({ default: [] }) private data!: Product[];
   @Prop({ default: false }) private isLoading?: boolean;
-  @Prop({ default: false }) private isWishlist?: boolean;
 
   get listData(): Product[] | null[] {
     return !this.isLoading

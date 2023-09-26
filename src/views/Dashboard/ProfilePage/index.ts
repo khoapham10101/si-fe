@@ -1,26 +1,26 @@
 import { SelectOption } from "@/components/Base/Select/Select";
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { handleImagePath } from "@/helpers/handleImagePath";
 import { DEFAULT_BIRTHDAY, GENDER_OPTIONS } from "@/constants/common";
-import { GenderEnum } from "@/enums/common";
 import { UserStatus } from "@/types/auth";
-import { CreateUserPayload, EditUserPayload } from "@/services/user/type";
+import { EditUserPayload } from "@/services/user/type";
 import { UserService } from "@/services/user";
 import moment from "moment";
 import { User } from "@/types/user";
+import { GenderEnum } from "@/enums/common";
 
 @Component({
-  name: "create-user-modal",
+  name: "profile-page",
   components: {
     //
   },
 })
-export default class CreateUserModal extends Vue {
-  @Prop({ default: false }) private visible!: boolean;
-  @Prop({ default: undefined }) private dataEdit?: User;
-
+export default class ProfilePage extends Vue {
   private handleImagePath = handleImagePath;
-  private title = "Create New User";
+
+  get profile(): User {
+    return this.$store.getters["auth/profile"];
+  }
 
   private form = {
     email: "",
@@ -34,24 +34,10 @@ export default class CreateUserModal extends Vue {
     phone: "",
     address: "",
     userStatusId: "",
-    password: "",
-    confirmPassword: "",
     avatar: null as null | string,
   };
 
   private avatarUpload = null as File | any;
-
-  private validateConfirmPassword = (
-    rule?: any,
-    value?: string,
-    callback?: any
-  ) => {
-    if (value !== this.form.password) {
-      callback(new Error("Confirm password is invalid"));
-    } else {
-      callback();
-    }
-  };
 
   private rules = {
     email: [
@@ -81,28 +67,7 @@ export default class CreateUserModal extends Vue {
         trigger: "blur",
       },
     ],
-    password: [
-      {
-        required: true,
-        message: "Please input password",
-        trigger: "blur",
-      },
-      {
-        min: 8,
-        message: "Password min length is 8 characters",
-      },
-    ],
-    confirmPassword: [
-      {
-        required: true,
-        message: "Please input confirm password",
-        trigger: "blur",
-      },
-      {
-        validator: this.validateConfirmPassword,
-        trigger: "change",
-      },
-    ],
+
     idCard: [
       {
         required: true,
@@ -151,49 +116,53 @@ export default class CreateUserModal extends Vue {
     },
   };
 
-  get genderOptions(): SelectOption[] {
-    return GENDER_OPTIONS;
+  private mounted() {
+    if (!this.listUserStatus) {
+      this.getListUserStatus();
+    }
+
+    (this.form.email = this.profile.email),
+      (this.form.firstName = this.profile.first_name),
+      (this.form.lastName = this.profile.last_name),
+      (this.form.idCard = this.profile.id_card),
+      (this.form.birthday = this.profile.birthday
+        ? this.profile.birthday
+        : DEFAULT_BIRTHDAY),
+      (this.form.gender = this.profile.gender_id
+        ? this.profile.gender_id.toString()
+        : GenderEnum.MALE.toString()),
+      (this.form.id_1 = this.profile.id_1 || ""),
+      (this.form.id_2 = this.profile.id_2 || ""),
+      (this.form.phone = this.profile.phone || ""),
+      (this.form.address = this.profile.address || ""),
+      (this.form.userStatusId = this.profile.user_status_id?.toString()),
+      (this.form.avatar = this.profile.avatar),
+      (this.avatarUpload = null);
   }
 
-  @Watch("visible")
-  private visibleChange() {
-    this.resetForm("create-user-form");
-    if (this.dataEdit) {
-      this.title = "Edit User";
-      (this.form.firstName = this.dataEdit.first_name),
-        (this.form.lastName = this.dataEdit.last_name),
-        (this.form.email = this.dataEdit.email),
-        (this.form.idCard = this.dataEdit.id_card),
-        (this.form.phone = this.dataEdit.phone || "");
-      this.form.userStatusId = this.dataEdit.user_status_id.toString();
-      this.form.birthday = this.dataEdit.birthday
-        ? this.dataEdit.birthday
-        : DEFAULT_BIRTHDAY;
-      (this.form.gender = this.dataEdit.gender_id
-        ? this.dataEdit.gender_id.toString()
-        : ""),
-        (this.form.id_1 = this.dataEdit.id_1 || ""),
-        (this.form.id_2 = this.dataEdit.id_2 || ""),
-        (this.form.address = this.dataEdit.address || "");
-      this.form.avatar = this.dataEdit.avatar;
-    } else {
-      this.title = "Create New User";
-      (this.form.firstName = ""),
-        (this.form.lastName = ""),
-        (this.form.email = ""),
-        (this.form.idCard = ""),
-        (this.form.phone = ""),
-        (this.form.userStatusId = ""),
-        (this.form.birthday = DEFAULT_BIRTHDAY),
-        (this.form.gender = ""),
-        (this.form.id_1 = ""),
-        (this.form.id_2 = ""),
-        (this.form.address = ""),
-        (this.form.avatar = null);
-    }
-    // avatar
+  private beforeDestroy() {
     this.avatarUpload = null;
     !!this.form.avatar && URL.revokeObjectURL(this.form.avatar);
+  }
+
+  private async getListUserStatus() {
+    try {
+      this.isLoading = true;
+      const { data } = await UserService.getListUserStatus({
+        filters: {
+          name: "",
+        },
+      });
+      this.$store.dispatch("user/updateListUserStatus", data);
+    } catch (error) {
+      //
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  get genderOptions(): SelectOption[] {
+    return GENDER_OPTIONS;
   }
 
   get listUserStatus(): UserStatus[] | null {
@@ -217,12 +186,12 @@ export default class CreateUserModal extends Vue {
   }
 
   private submitForm() {
-    (this.$refs["create-user-form"] as any).validate(async (valid: boolean) => {
+    (this.$refs["profile-form"] as any).validate(async (valid: boolean) => {
       if (valid) {
         try {
           this.isLoading = true;
           this.errorMsg = "";
-          const payload: CreateUserPayload = {
+          const payload: EditUserPayload = {
             first_name: this.form.firstName,
             last_name: this.form.lastName,
             id_card: this.form.idCard,
@@ -230,29 +199,26 @@ export default class CreateUserModal extends Vue {
               ? moment(this.form.birthday).format("YYYY-MM-DD")
               : "",
             gender_id: Number(this.form.gender),
-            id_1: this.form.id_1,
-            id_2: this.form.id_2,
-            phone: this.form.phone,
-            address: this.form.address,
+            id_1: this.form.id_1 || "",
+            id_2: this.form.id_2 || "",
+            phone: this.form.phone || "",
+            address: this.form.address || "",
             user_status_id: Number(this.form.userStatusId),
             email: this.form.email,
-            password: this.form.password,
           };
 
           if (this.avatarUpload !== null) {
             payload.avatar = this.avatarUpload;
           }
-          // console.log(payload);
 
-          if (!this.dataEdit) {
-            await UserService.createUser(payload);
-            this.$emit("reload");
-          } else {
-            const payloadEdit = payload as EditUserPayload;
-            delete payloadEdit.password;
-            const data = await UserService.editUser(this.dataEdit.id, payload);
-            this.$emit("reload", data);
-          }
+          const data = await UserService.editUser(this.profile.id, payload);
+          // console.log(data);
+          localStorage.setItem("profile", JSON.stringify(data));
+          this.$store.dispatch("auth/updateProfile", data);
+          this.$message({
+            message: "Update profile successfully",
+            type: "success",
+          });
         } catch (error: any) {
           this.errorMsg = error.response.data.message;
         } finally {

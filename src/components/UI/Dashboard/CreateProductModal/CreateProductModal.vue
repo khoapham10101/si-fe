@@ -37,6 +37,14 @@
           ></el-input>
         </el-form-item>
 
+        <el-form-item label="Delivery information" prop="deliveryInfomation">
+          <el-input
+            v-model="form.deliveryInfomation"
+            type="textarea"
+            placeholder="Delivery information"
+          ></el-input>
+        </el-form-item>
+
         <el-form-item label="Price" prop="price">
           <el-input
             v-model="form.price"

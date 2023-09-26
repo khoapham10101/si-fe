@@ -1,17 +1,14 @@
 <template>
-  <div class="create-user-modal">
-    <el-dialog
-      :title="title"
-      :visible="visible"
-      @close="handleCloseModal()"
-      :destroy-on-close="true"
-    >
+  <div class="profile-page py-4">
+    <div class="container">
+      <h2>Profile</h2>
       <el-form
         :model="form"
         :rules="rules"
-        ref="create-user-form"
+        ref="profile-form"
         label-position="top"
         v-loading="isLoading"
+        class="mt-3"
       >
         <el-form-item label="First name" prop="firstName">
           <el-input
@@ -28,27 +25,7 @@
           <el-input
             v-model="form.email"
             placeholder="Email"
-            :disabled="!!dataEdit"
-          ></el-input>
-        </el-form-item>
-
-        <el-form-item label="Password" prop="password" v-if="!dataEdit">
-          <el-input
-            v-model="form.password"
-            placeholder="Password"
-            type="password"
-          ></el-input>
-        </el-form-item>
-
-        <el-form-item
-          label="Confirm password"
-          prop="confirmPassword"
-          v-if="!dataEdit"
-        >
-          <el-input
-            v-model="form.confirmPassword"
-            placeholder="Password"
-            type="password"
+            :disabled="true"
           ></el-input>
         </el-form-item>
 
@@ -134,29 +111,29 @@
             />
           </div>
         </el-form-item>
-      </el-form>
 
-      <el-alert
-        v-if="!!errorMsg"
-        :title="errorMsg"
-        type="error"
-        show-icon
-        :closable="false"
-      >
-      </el-alert>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click.native="handleCloseModal()">Cancel</el-button>
-        <el-button type="primary" @click="submitForm()" :disabled="isLoading"
-          >Submit</el-button
+        <el-alert
+          v-if="!!errorMsg"
+          :title="errorMsg"
+          type="error"
+          show-icon
+          :closable="false"
+          class="mt-4"
         >
-      </span>
-    </el-dialog>
+        </el-alert>
+
+        <div class="d-flex justify-content-end my-4">
+          <el-button type="primary" @click="submitForm()" :disabled="isLoading"
+            >Update</el-button
+          >
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
-<script lang="ts" src="./CreateUserModal.ts"></script>
+<script lang="ts" src="./index.ts"></script>
 
 <style lang="scss" scoped>
-@import "./CreateUserModal.scss";
+@import "./index.scss";
 </style>

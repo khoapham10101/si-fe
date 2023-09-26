@@ -6,11 +6,7 @@
       :key="index"
     >
       <div class="my-3">
-        <ProductCard
-          :data="product"
-          :isWishlist="isWishlist"
-          @reloadWishlist="reloadWishlist"
-        />
+        <ProductCard :data="product" @reloadWishlist="reloadWishlist" />
       </div>
     </div>
   </div>

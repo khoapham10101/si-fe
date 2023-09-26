@@ -5,7 +5,6 @@
       <ProductList
         :data="productList"
         :isLoading="isLoading"
-        :isWishlist="true"
         @reloadWishlist="getWishlists()"
       />
       <el-empty

@@ -16,15 +16,42 @@ import DefaultLayout from "@/layouts/DefaultLayout/index.vue";
 import BlankLayout from "@/layouts/BlankLayout/index.vue";
 import DashboardLayout from "@/layouts/DashboardLayout/index.vue";
 import { DEFAULT_LAYOUT } from "./constants/common";
+import { WishlistService } from "./services/wishlist";
 
 @Component({
   components: { DefaultLayout, BlankLayout, DashboardLayout },
 })
 export default class App extends Vue {
   private layout: string | null = null;
+  private isWishlistLoading = false;
 
-  get isLogoutLoading() {
+  get isLogoutLoading(): boolean {
     return this.$store.getters["auth/isLogoutLoading"];
+  }
+
+  get isAuthenticated(): boolean {
+    return this.$store.getters["auth/isAuthenticated"];
+  }
+
+  @Watch("isAuthenticated", { deep: true, immediate: true })
+  private async isAuthenticatedChange() {
+    if (!this.isAuthenticated) {
+      this.$store.dispatch("product/updateProductsWishlist", null);
+      return;
+    }
+    try {
+      this.$store.dispatch("product/updateIsWishListLoading", true);
+      const { data } = await WishlistService.getWishlists({
+        per_page: 100,
+        current_page: 1,
+      });
+      const productsWishlist = data.map((item) => item.product);
+      this.$store.dispatch("product/updateProductsWishlist", productsWishlist);
+    } catch (error) {
+      //
+    } finally {
+      this.$store.dispatch("product/updateIsWishListLoading", false);
+    }
   }
 
   private created() {

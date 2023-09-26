@@ -38,7 +38,7 @@ axiosRequest.interceptors.response.use(
     if (error.response.status === 401) {
       store.dispatch("auth/resetAuth");
       localStorage.clear();
-      router.replace({ path: PATH.Home });
+      router.replace({ path: PATH.Login });
     }
     return Promise.reject(error);
   }

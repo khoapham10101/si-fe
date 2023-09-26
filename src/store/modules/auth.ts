@@ -1,10 +1,10 @@
 import { LoginResponse } from "@/services/auth/type";
-import { UserProfile } from "@/types/auth";
+import { User } from "@/types/user";
 import { Module } from "vuex";
 
 export interface AuthState {
   access_token: string;
-  profile: UserProfile | null;
+  profile: User | null;
   isAuthenticated: boolean;
   isLogoutLoading: boolean;
 }
@@ -31,6 +31,9 @@ const store: Module<AuthState, any> = {
     UPDATE_LOGOUT_LOADING(state, value: boolean) {
       state.isLogoutLoading = value;
     },
+    UPDATE_PROFILE(state, value: User | null) {
+      state.profile = value;
+    },
   },
   getters: {
     authState: (state) => {
@@ -38,6 +41,12 @@ const store: Module<AuthState, any> = {
     },
     isLogoutLoading: (state) => {
       return state.isLogoutLoading;
+    },
+    profile: (state) => {
+      return state.profile;
+    },
+    isAuthenticated: (state) => {
+      return state.isAuthenticated;
     },
   },
   actions: {
@@ -49,6 +58,9 @@ const store: Module<AuthState, any> = {
     },
     updateIsLogoutLoading({ commit }, payload: boolean) {
       commit("UPDATE_LOGOUT_LOADING", payload);
+    },
+    updateProfile({ commit }, payload: User | null) {
+      commit("UPDATE_PROFILE", payload);
     },
   },
 };
