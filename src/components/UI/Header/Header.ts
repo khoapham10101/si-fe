@@ -30,15 +30,6 @@ export default class Header extends Vue {
     return this.$store.getters["auth/authState"].profile;
   }
 
-  get isAdmin(): boolean {
-    if (!this.isAuthenticated) {
-      return false;
-    }
-    const roles = this.$store.getters["auth/profile"].roles;
-    const isAdmin = roles.some((item: Role) => item?.name === UserRole.ADMIN);
-    return isAdmin;
-  }
-
   @Watch("isAuthenticated", { immediate: true })
   private isAuthenticatedChange() {
     if (this.isAuthenticated) {
