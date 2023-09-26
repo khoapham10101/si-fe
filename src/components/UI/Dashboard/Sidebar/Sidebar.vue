@@ -2,10 +2,7 @@
   <div>
     <div :class="['d-flex justify-content-center', { 'py-3': !isMobile }]">
       <router-link to="/">
-        <img
-          src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-          style="width: 50px"
-        />
+        <img src="@/assets/images/shopinvest-logo.png" width="35" />
       </router-link>
     </div>
     <div>

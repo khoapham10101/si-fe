@@ -5,10 +5,7 @@
         <div class="row gy-3">
           <div class="col-12 col-md-6">
             <router-link to="/" class="float-start">
-              <img
-                src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-                height="35"
-              />
+              <img src="@/assets/images/shopinvest-logo.png" width="35" />
             </router-link>
           </div>
 

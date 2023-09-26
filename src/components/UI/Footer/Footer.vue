@@ -11,10 +11,7 @@
           <!-- Grid column -->
           <div class="col-12 col-lg-3 col-sm-12 mb-2">
             <a href="#" class="">
-              <img
-                src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-                height="35"
-              />
+              <img src="@/assets/images/shopinvest-logo.png" width="35" />
             </a>
             <p class="mt-2 text-dark mb-3">© 2023 Copyright: Shopinvest</p>
           </div>

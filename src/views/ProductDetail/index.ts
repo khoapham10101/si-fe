@@ -21,6 +21,7 @@ const { swiper, swiperSlide } = VueAwesomeSwiper;
   },
 })
 export default class ProductDetailPage extends Vue {
+  private PATH = PATH;
   private quantity = 1;
   private product = {} as Product;
   private isLoading = true;
