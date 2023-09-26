@@ -27,11 +27,11 @@
         <router-link
           class="dropdown-item"
           type="button"
-          :to="PATH.Account.Product"
+          :to="PATH.Account.Profile"
         >
           <span class="text-secondary">
             <i class="fa-solid fa-id-card mx-2"></i>
-            Account
+            Profile
           </span>
         </router-link>
       </li>

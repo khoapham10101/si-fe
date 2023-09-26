@@ -1,5 +1,11 @@
 import { GenderType, UserStatus } from "./auth";
 
+export interface Role {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
 export interface User {
   id: number;
   first_name: string;
@@ -16,6 +22,7 @@ export interface User {
   address: string | null;
   user_status_id: number;
   user_status: UserStatus;
+  roles: Role[];
   email: string;
   created_at: string;
   updated_at: string;

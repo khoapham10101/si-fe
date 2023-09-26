@@ -1,10 +1,11 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import Input from "@/components/Base/Input/Input.vue";
 import { PATH } from "@/constants/path";
 import { AuthService } from "@/services/auth";
-import { UserProfile } from "@/types/auth";
 import DropdownUser from "../DropdownUser/DropdownUser.vue";
 import { CartService } from "@/services/cart";
+import { Role, User } from "@/types/user";
+import { UserRole } from "@/enums/user";
 
 @Component({
   name: "header-component",
@@ -25,12 +26,28 @@ export default class Header extends Vue {
     return this.$store.getters["auth/authState"].isAuthenticated;
   }
 
-  get profile(): UserProfile {
+  get profile(): User {
     return this.$store.getters["auth/authState"].profile;
   }
 
+  get isAdmin(): boolean {
+    if (!this.isAuthenticated) {
+      return false;
+    }
+    const roles = this.$store.getters["auth/profile"].roles;
+    const isAdmin = roles.some((item: Role) => item?.name === UserRole.ADMIN);
+    return isAdmin;
+  }
+
+  @Watch("isAuthenticated", { immediate: true })
+  private isAuthenticatedChange() {
+    if (this.isAuthenticated) {
+      this.getCartsList();
+    }
+  }
+
   private mounted() {
-    this.getCartsList();
+    //
   }
 
   private errorImage(e: any) {

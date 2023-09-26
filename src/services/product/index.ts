@@ -26,7 +26,7 @@ export const ProductService = {
     pagination?: PaginationPayload
   ): Promise<GetProductsResponse> {
     const { data } = await axiosRequest.post<GetProductsResponse>(
-      "/public/products",
+      "/products",
       pagination && { pagination }
     );
     return data;
@@ -38,6 +38,7 @@ export const ProductService = {
       sku,
       description,
       warranty_information,
+      delivery_infomation,
       quantity,
       price,
       brand_id,
@@ -48,6 +49,7 @@ export const ProductService = {
     formData.append("sku", sku);
     formData.append("description", description);
     formData.append("warranty_information", warranty_information);
+    formData.append("delivery_infomation", delivery_infomation);
     formData.append("quantity", quantity.toString());
     formData.append("price", price.toString());
     formData.append("brand_id", brand_id.toString());
@@ -73,6 +75,7 @@ export const ProductService = {
       sku,
       description,
       warranty_information,
+      delivery_infomation,
       quantity,
       price,
       brand_id,
@@ -83,6 +86,7 @@ export const ProductService = {
     formData.append("sku", sku);
     formData.append("description", description);
     formData.append("warranty_information", warranty_information);
+    formData.append("delivery_infomation", delivery_infomation);
     formData.append("quantity", quantity.toString());
     formData.append("price", price.toString());
     formData.append("brand_id", brand_id.toString());

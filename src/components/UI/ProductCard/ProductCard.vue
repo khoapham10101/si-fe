@@ -3,7 +3,7 @@
     <!-- loading -->
     <template slot="template">
       <el-skeleton-item
-        variant="image"
+        variant="rect"
         style="aspect-ratio: 1/1; border: none"
         class="product-card card"
       >
@@ -27,6 +27,13 @@
               :src="handleImagePath(data.images[0]?.path)"
               class="product-card-image card-img-top w-100 h-100"
               alt=""
+              v-if="data.images.length > 0"
+            />
+            <img
+              src="@/assets/images/product-image-default.png"
+              class="product-card-image card-img-top w-100 h-100"
+              alt=""
+              v-else
             />
           </router-link>
         </div>

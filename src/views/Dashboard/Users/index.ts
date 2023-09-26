@@ -3,7 +3,6 @@ import { User } from "@/types/user";
 import { Component, Vue } from "vue-property-decorator";
 import CreateUserModal from "@/components/UI/Dashboard/CreateUserModal/CreateUserModal.vue";
 import { UserStatus } from "@/types/auth";
-import { handleImagePath } from "@/helpers/handleImagePath";
 
 @Component({
   name: "admin-users-page",
@@ -24,8 +23,6 @@ export default class AdminUsersPage extends Vue {
   private isLoading = false;
   private visibleCreateUserModal = false;
   private userEdit: User | null = null;
-
-  private handleImagePath = handleImagePath;
 
   get listUserStatus(): UserStatus[] | null {
     return this.$store.getters["user/listUserStatus"];
@@ -105,10 +102,11 @@ export default class AdminUsersPage extends Vue {
   }
 
   private openConfirmDelete(index: number, row: User) {
-    this.$confirm("Do you want to delete this user?", "Confirm", {
+    this.$confirm("Are you sure to delete this user?", "Confirm", {
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       type: "warning",
+      confirmButtonClass: "el-button--danger",
     })
       .then(() => {
         this.handleDelete(row.id);

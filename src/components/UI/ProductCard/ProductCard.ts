@@ -13,11 +13,11 @@ import { WishlistService } from "@/services/wishlist";
 })
 export default class ProductCard extends Vue {
   @Prop({ default: null }) private data!: Product | null;
-  @Prop({ default: false }) private isWishlist?: boolean;
 
   private handleImagePath = handleImagePath;
   private isAddToCardLoading = false;
   private isWishlistLoading = false;
+  // private isWishList = false;
 
   get isAuthenticated(): boolean {
     return this.$store.getters["auth/authState"].isAuthenticated;
@@ -25,6 +25,16 @@ export default class ProductCard extends Vue {
 
   get pathDetail(): string {
     return `${PATH.Product}/${this.data?.id}`;
+  }
+
+  get productsWishlist(): Product[] | null {
+    return this.$store.getters["product/productsWishlist"];
+  }
+
+  get isWishlist(): boolean {
+    return (
+      this.productsWishlist?.some((item) => item.id === this.data?.id) || false
+    );
   }
 
   private async handleAddToCart() {
@@ -39,6 +49,10 @@ export default class ProductCard extends Vue {
       await CartService.createCart({ product_id: Number(this.data?.id) });
       const { data } = await CartService.getListCarts();
       this.$store.dispatch("cart/updateCarts", data);
+      this.$message({
+        message: "Added to cart this product successfully",
+        type: "success",
+      });
     } catch (error) {
       //
     } finally {
@@ -65,6 +79,13 @@ export default class ProductCard extends Vue {
     try {
       this.isWishlistLoading = true;
       await WishlistService.createWishlist(Number(this.data?.id));
+      this.$store.dispatch("product/updateIsWishListLoading", true);
+      const { data } = await WishlistService.getWishlists({
+        per_page: 100,
+        current_page: 1,
+      });
+      const productsWishlist = data.map((item) => item.product);
+      this.$store.dispatch("product/updateProductsWishlist", productsWishlist);
       this.$message({
         message: "Create wishlist successfully",
         type: "success",
@@ -76,6 +97,7 @@ export default class ProductCard extends Vue {
       });
     } finally {
       this.isWishlistLoading = false;
+      this.$store.dispatch("product/updateIsWishListLoading", false);
     }
   }
 
@@ -83,6 +105,18 @@ export default class ProductCard extends Vue {
     try {
       this.isWishlistLoading = true;
       await WishlistService.deleteWishlist(Number(this.data?.id));
+
+      this.$store.dispatch("product/updateIsWishListLoading", true);
+      const { data } = await WishlistService.getWishlists({
+        per_page: 100,
+        current_page: 1,
+      });
+      const productsWishlist = data.map((item) => item.product);
+      this.$store.dispatch("product/updateProductsWishlist", productsWishlist);
+      this.$message({
+        message: "Delete wishlist successfully",
+        type: "success",
+      });
       this.$emit("reloadWishlist");
     } catch (error: any) {
       this.$message({
@@ -91,6 +125,7 @@ export default class ProductCard extends Vue {
       });
     } finally {
       this.isWishlistLoading = false;
+      this.$store.dispatch("product/updateIsWishListLoading", false);
     }
   }
 }

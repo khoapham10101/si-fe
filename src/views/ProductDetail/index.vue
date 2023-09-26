@@ -15,15 +15,33 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item text-reset">Home</li>
           <i class="fa-solid fa-chevron-right" style="font-size: 10px"></i>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li
+            :class="['breadcrumb-item', { active: !product?.name }]"
+            aria-current="page"
+          >
             Product detail
+          </li>
+          <i
+            class="fa-solid fa-chevron-right"
+            style="font-size: 10px"
+            v-if="!!product?.name"
+          ></i>
+          <li
+            :class="['breadcrumb-item', { active: !!product?.name }]"
+            aria-current="page"
+          >
+            {{ product?.name }}
           </li>
         </ol>
       </div>
     </nav>
     <!--  -->
 
-    <div style="min-height: 500px" v-loading="isLoading" v-if="isLoading"></div>
+    <div
+      style="min-height: 500px"
+      v-loading="isLoading || isGetWishlistLoading"
+      v-if="isLoading || isGetWishlistLoading"
+    ></div>
     <div class="container py-5" v-else>
       <div class="row g-2 g-sm-5">
         <div class="col-12 col-md-5">
@@ -35,6 +53,13 @@
                   class="w-100 h-100"
                   style="object-fit: contain"
                   alt=""
+                  v-if="product.images.length > 0"
+                />
+                <img
+                  src="@/assets/images/product-image-default.png"
+                  class="image-item w-100 h-100"
+                  alt=""
+                  v-else
                 />
               </div>
             </div>
@@ -95,11 +120,22 @@
           <div class="mt-3" style="height: 250px">
             <el-tabs type="card" @tab-click="handleClickTab">
               <el-tab-pane label="Description">
-                {{ product?.description }}
+                <p v-if="!!product?.description">
+                  {{ product?.description }}
+                </p>
+                <el-empty :image-size="50" v-else></el-empty>
               </el-tab-pane>
-              <el-tab-pane label="Delivery"> Delivery </el-tab-pane>
+              <el-tab-pane label="Delivery">
+                <p v-if="!!product?.delivery_infomation">
+                  {{ product.delivery_infomation }}
+                </p>
+                <el-empty :image-size="50" v-else></el-empty>
+              </el-tab-pane>
               <el-tab-pane label="Warranty">
-                {{ product?.warranty_information }}
+                <p v-if="!!product?.warranty_information">
+                  {{ product?.warranty_information }}
+                </p>
+                <el-empty :image-size="50" v-else></el-empty>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -126,6 +162,8 @@
                 style="width: 100px"
                 min="1"
                 v-model.number="quantity"
+                oninput="this.value = Math.abs(this.value)"
+                @blur="onBlurInputQuantity"
               />
               <button
                 type="button"
@@ -157,7 +195,7 @@
             </button>
             <button
               class="add-wishlist btn btn-light border icon-hover d-inline-flex justify-content-center align-items-center"
-              @click="handleCreateWishList()"
+              @click="handleWishlist()"
               :disabled="isWishlistLoading"
             >
               <span
@@ -167,7 +205,12 @@
                 v-show="isWishlistLoading"
               ></span>
               <span v-show="!isWishlistLoading">
-                <i class="fas fa-heart fa-lg text-secondary"></i>
+                <i
+                  :class="[
+                    'fas fa-heart fa-lg text-secondary',
+                    { 'text-danger': isWishlist },
+                  ]"
+                ></i>
               </span>
             </button>
           </div>

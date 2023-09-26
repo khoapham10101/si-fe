@@ -60,6 +60,21 @@ export default class ProductDetailPage extends Vue {
     return this.$store.getters["auth/authState"].isAuthenticated;
   }
 
+  get productsWishlist(): Product[] | null {
+    return this.$store.getters["product/productsWishlist"];
+  }
+
+  get isWishlist(): boolean {
+    return (
+      this.productsWishlist?.some((item) => item.id === Number(this.id)) ||
+      false
+    );
+  }
+
+  get isGetWishlistLoading(): boolean {
+    return this.$store.getters["product/isWishlistLoading"];
+  }
+
   private mounted() {
     this.getProductDetail();
     // console.log(this.swiper);
@@ -88,7 +103,16 @@ export default class ProductDetailPage extends Vue {
     this.quantity = this.quantity - 1;
   }
 
+  private onBlurInputQuantity() {
+    if (!this.quantity) {
+      this.quantity = 1;
+    }
+  }
+
   private async handleAddToCart() {
+    if (!this.quantity) {
+      return;
+    }
     if (!this.isAuthenticated) {
       this.$router.push({
         path: PATH.Login,
@@ -97,9 +121,16 @@ export default class ProductDetailPage extends Vue {
     }
     try {
       this.isAddToCardLoading = true;
-      await CartService.createCart({ product_id: Number(this.id) });
+      await CartService.createCart({
+        product_id: Number(this.id),
+        quantity: this.quantity,
+      });
       const { data } = await CartService.getListCarts();
       this.$store.dispatch("cart/updateCarts", data);
+      this.$message({
+        message: "Added to cart this product successfully",
+        type: "success",
+      });
     } catch (error) {
       //
     } finally {
@@ -115,16 +146,32 @@ export default class ProductDetailPage extends Vue {
     this.activeImage = path;
   }
 
-  private async handleCreateWishList() {
+  private handleWishlist() {
     if (!this.isAuthenticated) {
       this.$router.push({
         path: PATH.Login,
       });
       return;
     }
+
+    if (this.isWishlist) {
+      this.handleDeleteWishlist();
+    } else {
+      this.handleCreateWishList();
+    }
+  }
+
+  private async handleCreateWishList() {
     try {
       this.isWishlistLoading = true;
       await WishlistService.createWishlist(Number(this.id));
+      this.$store.dispatch("product/updateIsWishListLoading", true);
+      const { data } = await WishlistService.getWishlists({
+        per_page: 100,
+        current_page: 1,
+      });
+      const productsWishlist = data.map((item) => item.product);
+      this.$store.dispatch("product/updateProductsWishlist", productsWishlist);
       this.$message({
         message: "Create wishlist successfully",
         type: "success",
@@ -136,6 +183,35 @@ export default class ProductDetailPage extends Vue {
       });
     } finally {
       this.isWishlistLoading = false;
+      this.$store.dispatch("product/updateIsWishListLoading", false);
+    }
+  }
+
+  private async handleDeleteWishlist() {
+    try {
+      this.isWishlistLoading = true;
+      await WishlistService.deleteWishlist(Number(this.id));
+
+      this.$store.dispatch("product/updateIsWishListLoading", true);
+      const { data } = await WishlistService.getWishlists({
+        per_page: 100,
+        current_page: 1,
+      });
+      const productsWishlist = data.map((item) => item.product);
+      this.$store.dispatch("product/updateProductsWishlist", productsWishlist);
+      this.$message({
+        message: "Delete wishlist successfully",
+        type: "success",
+      });
+      this.$emit("reloadWishlist");
+    } catch (error: any) {
+      this.$message({
+        message: error.response.data.message,
+        type: "error",
+      });
+    } finally {
+      this.isWishlistLoading = false;
+      this.$store.dispatch("product/updateIsWishListLoading", false);
     }
   }
 

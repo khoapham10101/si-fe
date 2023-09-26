@@ -14,11 +14,11 @@ export interface CreateUserPayload {
   first_name: string;
   last_name: string;
   id_card: string;
-  birthday: string | null;
+  birthday: string;
   gender_id: number;
   id_1: string;
   id_2: string;
-  avatar: string | null;
+  avatar?: File;
   phone: string;
   address: string;
   user_status_id: number;

@@ -1,6 +1,7 @@
 import { PATH, accountPath } from "@/constants/path";
+import { UserRole } from "@/enums/user";
 import { AuthService } from "@/services/auth";
-import { UserProfile } from "@/types/auth";
+import { Role, User } from "@/types/user";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
@@ -17,9 +18,14 @@ export default class DropdownUser extends Vue {
     return this.$store.getters["auth/authState"].isAuthenticated;
   }
 
-  get profile(): UserProfile {
+  get profile(): User {
     return this.$store.getters["auth/authState"].profile;
   }
+
+  // get isAdmin(): boolean {
+  //   const roles = this.$store.getters["auth/profile"].roles;
+  //   return roles.some((item: Role) => item.name === UserRole.ADMIN);
+  // }
 
   private async handleLogout() {
     try {

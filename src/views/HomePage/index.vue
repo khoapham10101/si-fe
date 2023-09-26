@@ -16,9 +16,15 @@
       </div>
     </div>
 
-    <div class="container py-5" v-loading="isCreateWishlistLoading">
+    <div
+      class="container py-5"
+      v-loading="isCreateWishlistLoading || isWishlistLoading"
+    >
       <h3>New products</h3>
-      <ProductList :data="productList" :isLoading="isProductLoading" />
+      <ProductList
+        :data="productList"
+        :isLoading="isProductLoading || isWishlistLoading"
+      />
       <el-empty
         description="No data"
         v-if="!productList.length && !isProductLoading"

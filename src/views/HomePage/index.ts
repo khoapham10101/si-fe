@@ -23,18 +23,19 @@ export default class HomePage extends Vue {
   private currentPage = Number(this.$route.query.page) || 1;
   private isProductLoading = false;
   private isCreateWishlistLoading = false;
+  // private isWishlistLoading = false;
 
   @Watch("$route", { deep: true })
   private routeChange(value: any) {
-    // const keyword = value.query.keyword;
-    // if (!keyword) {
-    //   this.productList = PRODUCTS_DUMMY;
-    //   return;
-    // }
-    // this.productList = PRODUCTS_DUMMY.filter((item) =>
-    //   item.title.toLowerCase().includes(keyword.toLowerCase())
-    // );
     this.getProducts();
+  }
+
+  get isAuthenticated(): boolean {
+    return this.$store.getters["auth/isAuthenticated"];
+  }
+
+  get isWishlistLoading(): boolean {
+    return this.$store.getters["product/isWishlistLoading"];
   }
 
   private mounted() {

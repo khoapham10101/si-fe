@@ -21,6 +21,7 @@ export default class CreateProductModal extends Vue {
     name: "",
     sku: "",
     description: "",
+    deliveryInfomation: "",
     warrantyInformation: "",
     price: "",
     quantity: "",
@@ -87,6 +88,7 @@ export default class CreateProductModal extends Vue {
         (this.form.sku = this.dataEdit.sku),
         (this.form.warrantyInformation =
           this.dataEdit.warranty_information || "");
+      this.form.deliveryInfomation = this.dataEdit.delivery_infomation || "";
       this.listFileUploaded = this.dataEdit?.images as ProductImage[];
     } else {
       this.title = "Create New Product";
@@ -94,6 +96,7 @@ export default class CreateProductModal extends Vue {
         (this.form.sku = ""),
         (this.form.description = ""),
         (this.form.warrantyInformation = ""),
+        (this.form.deliveryInfomation = ""),
         (this.form.price = ""),
         (this.form.quantity = ""),
         (this.form.brandId = "");
@@ -161,6 +164,7 @@ export default class CreateProductModal extends Vue {
               sku: this.form.sku,
               description: this.form.description,
               warranty_information: this.form.warrantyInformation,
+              delivery_infomation: this.form.deliveryInfomation,
               price: Number(this.form.price),
               quantity: Number(this.form.quantity),
               brand_id: Number(this.form.brandId),

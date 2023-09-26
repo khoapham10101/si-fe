@@ -50,7 +50,7 @@
           <img
             class="avatar"
             v-if="scope.row.avatar"
-            :src="handleImagePath(scope.row.avatar)"
+            :src="scope.row.avatar"
             alt=""
           />
           <img

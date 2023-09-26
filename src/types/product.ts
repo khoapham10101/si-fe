@@ -24,8 +24,10 @@ export interface Product {
   description: string | null;
   price: number;
   quantity: number;
-  warranty_information: null;
+  delivery_infomation: string | null;
+  warranty_information: string | null;
   images: ProductImage[];
+  is_wishlist: boolean;
   created_at: string;
   updated_at: string;
   created_at_formatted: string;

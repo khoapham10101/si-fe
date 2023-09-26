@@ -25,6 +25,7 @@
               <router-link
                 :to="PATH.Account.Wishlist"
                 class="btn btn-outline-secondary"
+                v-if="isAdmin"
               >
                 <i class="fa-solid fa-heart"></i>
                 <span> Wishlist </span>
@@ -33,7 +34,9 @@
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>
                   My cart
-                  <span class="text-danger fw-bolder" v-if="!isLoading"
+                  <span
+                    class="text-danger fw-bolder"
+                    v-if="!isLoading && isAuthenticated"
                     >({{ cartTotal }})</span
                   >
                 </span>
