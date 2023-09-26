@@ -13,7 +13,15 @@
     >
       <div class="container">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item text-reset">Home</li>
+          <li class="breadcrumb-item text-reset">
+            <router-link
+              :to="PATH.Home"
+              class="text-reset"
+              style="text-decoration: none"
+            >
+              Home
+            </router-link>
+          </li>
           <i class="fa-solid fa-chevron-right" style="font-size: 10px"></i>
           <li
             :class="['breadcrumb-item', { active: !product?.name }]"
