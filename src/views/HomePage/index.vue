@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <div class="text-white py-5" style="background-color: #3b71ca">
-      <div class="container py-5">
+      <div class="container py-5" style="min-height: calc(100vh - 650px)">
         <h1>
           Best products &amp; <br />
           brands in our store

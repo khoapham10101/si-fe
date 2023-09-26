@@ -22,7 +22,7 @@
               <router-link
                 :to="PATH.Account.Wishlist"
                 class="btn btn-outline-secondary"
-                v-if="isAdmin"
+                v-if="isAuthenticated"
               >
                 <i class="fa-solid fa-heart"></i>
                 <span> Wishlist </span>

@@ -115,12 +115,15 @@
         </div>
 
         <div class="col-12 col-md-7">
-          <h3>{{ product?.name }}</h3>
+          <div class="d-flex justify-content-between align-items-center">
+            <h3>{{ product?.name }}</h3>
 
-          <div class="text-secondary fs-3 mt-3">
-            {{ product?.price?.toFixed(2) }}$
+            <div class="text-secondary fs-3">
+              {{ product?.price?.toFixed(2) }}$
+            </div>
           </div>
-          <div class="d-flex align-items-center mt-2">
+
+          <div class="d-flex align-items-center mt-3">
             <div style="width: 120px">Brand</div>
             <div class="text-secondary">{{ product.brand.name }}</div>
           </div>
