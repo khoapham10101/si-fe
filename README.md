@@ -4,33 +4,21 @@
 
 Clone the git repository on your local machine.
 
-### Prerequisites
+## Prerequisites
 
 To can develop we need to install on the local machine:
+
 1. node version >= 16
 2. npm
 
-## Environment
+## Installing
 
 ```bash
-copy .env.example .env
+make build
 ```
 
-## Running project
+## Start the development server
 
 ```bash
-npm install
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```bash
-npm run build
-```
-
-### Lints and fixes files
-
-```bash
-npm run lint
+make start
 ```
