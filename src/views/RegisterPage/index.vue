@@ -51,7 +51,8 @@
                 name="idCard"
                 placeholder="Enter ID Card"
                 :inputClass="{
-                  'is-invalid': !form.idCard.value && form.idCard.blured,
+                  'is-invalid':
+                    !validIdCard(form.idCard.value) && form.idCard.blured,
                 }"
                 :required="true"
                 :invalidFeedback="form.idCard.errorMsg"

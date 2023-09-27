@@ -34,7 +34,7 @@ export default class RegisterPage extends Vue {
     idCard: {
       value: "",
       blured: false,
-      errorMsg: "Id card is required",
+      errorMsg: "ID Card min length is 5 characters",
     },
     email: {
       value: "",
@@ -82,11 +82,25 @@ export default class RegisterPage extends Vue {
     return this.validPassword(value) && value === this.form.password.value;
   }
 
+  private validIdCard(value: string) {
+    if (value.length < 5) {
+      this.form.idCard.errorMsg = "ID Card min length is 5 characters";
+      return false;
+    }
+    const regex = /^[0-9]+$/;
+    if (!regex.test(value.toLowerCase())) {
+      this.form.idCard.errorMsg = "ID Card is invalid";
+      return false;
+    }
+    return regex.test(value.toLowerCase());
+  }
+
   private validate() {
     if (
       this.validEmail(this.form.email.value) &&
       this.validPassword(this.form.password.value) &&
-      this.validConfirmPassword(this.form.confirmPassword.value)
+      this.validConfirmPassword(this.form.confirmPassword.value) &&
+      this.validIdCard(this.form.idCard.value)
     ) {
       this.form.valid = true;
     }
@@ -106,7 +120,7 @@ export default class RegisterPage extends Vue {
           password: this.form.password.value,
           gender_id: Number(this.form.gender.value),
           birthday: this.form.birthday.value
-            ? moment(this.form.birthday.value).format("YYYY/MM/DD")
+            ? moment(this.form.birthday.value).format("YYYY-MM-DD")
             : null,
         };
 
